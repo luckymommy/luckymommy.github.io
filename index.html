@@ -24,13 +24,30 @@
       animation: fadeIn 1.2s ease-out forwards;
     }
 
-    /* Hover "levitate" effect */
+    /* Hover "levitate" effect with golden pulse */
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3), 0 0 30px rgba(255, 215, 0, 0.1); }
+      50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.6), 0 0 45px rgba(255, 215, 0, 0.4); }
+      100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3), 0 0 30px rgba(255, 215, 0, 0.1); }
+    }
+
     .hover-levitate {
       transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
     .hover-levitate:hover {
       transform: translateY(-10px) scale(1.03);
-      box-shadow: 0 12px 25px rgba(255, 255, 255, 0.25);
+      animation: pulseGlow 1.5s infinite;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    }
+
+    /* Golden pulse for button hover */
+    .hover-golden-pulse {
+      transition: all 0.3s ease;
+    }
+    .hover-golden-pulse:hover {
+      animation: pulseGlow 1.5s infinite;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+      background-color: #b91c1c; /* slightly brighter red */
     }
 
     /* Smooth horizontal scroll */
@@ -54,7 +71,7 @@
       <div class="text-center md:text-left animate-fadeUp">
         <h1 class="text-5xl md:text-6xl font-bold text-white drop-shadow-lg">LuckyMommy</h1>
         <p class="text-lg mt-3 text-gray-200">Jennifer Reyes Sing — Casino Vlogs, Wins & Lifestyle</p>
-        <a href="#vlogs" class="mt-6 inline-block bg-red-700 text-white font-semibold py-2 px-6 rounded-full hover:bg-red-600 transition">
+        <a href="#vlogs" class="mt-6 inline-block bg-red-700 text-white font-semibold py-2 px-6 rounded-full hover-golden-pulse transition">
           Watch My Vlogs
         </a>
       </div>
@@ -86,7 +103,6 @@
     </div>
 
     <div class="flex space-x-6 px-4 pb-6 w-max mx-auto">
-      <!-- Template for 10 Vlogs -->
       <script>
         const vlogs = [
           {title:"Big Win Night!",desc:"My biggest casino win — an unforgettable evening!",thumb:"images/thumbnail1.jpg",link:"https://www.youtube.com/watch?v=VIDEO_ID1"},
