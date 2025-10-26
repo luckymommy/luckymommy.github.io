@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LuckyMommy Vlog | Jennifer Reyes Sing</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  
+
   <style>
     /* ===============================
-       🎬 ANIMATIONS
+       ✨ ANIMATIONS
     =================================*/
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(40px); }
@@ -30,16 +30,6 @@
       animation: fadeUp 1.2s ease-out forwards;
     }
 
-    .fade-stagger {
-      opacity: 0;
-      transform: translateY(40px);
-    }
-
-    .fade-stagger.show {
-      animation: fadeUp 0.8s ease-out forwards;
-    }
-
-    /* 🎥 Background slow zoom */
     @keyframes slowZoom {
       from { transform: scale(1); }
       to { transform: scale(1.15); }
@@ -48,27 +38,82 @@
     .bg-zoom {
       animation: slowZoom 30s ease-in-out infinite alternate;
     }
+
+    /* 🌌 Hero Panel Style — dark pastel with glow */
+    .dark-pastel-panel {
+      background-color: rgba(10, 26, 47, 0.85);
+      border: 1px solid rgba(0, 102, 255, 0.3);
+      box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.5),
+        0 0 25px rgba(0, 102, 255, 0.25);
+      backdrop-filter: blur(12px);
+      transition: box-shadow 0.5s ease-in-out;
+    }
+
+    /* Subtle pulsing neon glow */
+    @keyframes softPulse {
+      0% { box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 20px rgba(0,102,255,0.25); }
+      50% { box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 35px rgba(0,102,255,0.45); }
+      100% { box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 20px rgba(0,102,255,0.25); }
+    }
+
+    .hero-glow {
+      animation: softPulse 6s ease-in-out infinite;
+    }
+
+    /* 🔹 Glow intensifies on hover */
+    .dark-pastel-panel:hover {
+      box-shadow:
+        0 8px 35px rgba(0, 0, 0, 0.6),
+        0 0 45px rgba(0, 153, 255, 0.55);
+      transition: box-shadow 0.3s ease-in-out;
+    }
+
+    /* 🎞️ Horizontal scroll styling */
+    .scroll-container {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      gap: 1.5rem;
+      padding-bottom: 1rem;
+    }
+
+    .scroll-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scroll-container {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .vlog-card {
+      min-width: 280px;
+      flex: 0 0 auto;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .vlog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(0, 102, 255, 0.4);
+    }
   </style>
 </head>
 
 <body class="bg-white text-gray-800 font-sans">
 
   <!-- HERO SECTION -->
-  <header class="relative h-screen flex items-center justify-center text-center overflow-hidden">
-    <!-- Casino background with cinematic zoom -->
+  <header class="relative h-screen flex items-center justify-center text-center overflow-hidden px-6 md:px-12">
     <img src="images/hero-bg.jpg" alt="Casino background" class="absolute inset-0 w-full h-full object-cover bg-zoom">
     <div class="absolute inset-0 bg-blue-950/40"></div>
-    
-    <!-- Floating transparent hero box -->
-    <div class="relative z-10 flex flex-col md:flex-row items-center gap-8 bg-white/15 backdrop-blur-lg border border-white/20 p-10 rounded-3xl shadow-2xl fade-up-hero">
-      <!-- PROFILE IMAGE -->
+
+    <div class="relative z-10 flex flex-col md:flex-row items-center gap-8 p-10 md:p-16 rounded-3xl dark-pastel-panel hero-glow fade-up-hero">
       <img src="images/profile.jpg" alt="LuckyMommy Profile" class="w-44 h-44 rounded-full object-cover border-4 border-blue-800 shadow-xl transform hover:scale-105 transition-transform duration-300">
       
-      <!-- TEXT CONTENT -->
       <div class="text-center md:text-left text-white drop-shadow-lg">
         <h1 class="text-5xl md:text-6xl font-bold">🎰 LuckyMommy</h1>
         <p class="text-lg mt-3 text-blue-100">Jennifer Reyes Sing — Casino Vlogs, Wins & Lifestyle</p>
-        <a href="#vlogs" class="mt-6 inline-block bg-blue-800 text-white font-semibold py-2 px-6 rounded-full hover:bg-blue-700 transition">
+        <a href="#vlogs" class="mt-6 inline-block bg-blue-700 text-white font-semibold py-2 px-6 rounded-full hover:bg-blue-600 transition">
           Watch My Vlogs
         </a>
       </div>
@@ -92,58 +137,25 @@
     </div>
   </section>
 
-  <!-- VLOG SECTION -->
+  <!-- VLOG SECTION (HORIZONTAL SCROLL) -->
   <section id="vlogs" class="py-16 px-6 bg-blue-900 text-white fade-up">
     <div class="max-w-6xl mx-auto text-center mb-10">
       <h2 class="text-3xl font-bold text-white">🎥 Latest Vlogs</h2>
-      <p class="text-blue-200 mt-2">Click a video to watch directly on YouTube!</p>
+      <p class="text-blue-200 mt-2">Scroll right → or swipe to see more vlogs!</p>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-      <!-- Vlog 1 -->
-      <a href="https://www.youtube.com/watch?v=VIDEO_ID1" target="_blank" class="bg-white text-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-blue-500/30 transition block fade-stagger">
-        <img src="images/thumbnail1.jpg" alt="Vlog 1 Thumbnail" class="w-full h-48 object-cover">
-        <div class="p-4">
-          <h3 class="font-semibold text-lg text-blue-800">Big Win Night!</h3>
-          <p class="text-gray-600 text-sm mt-1">My biggest casino win — an unforgettable evening of luck and excitement!</p>
-        </div>
-      </a>
-
-      <!-- Vlog 2 -->
-      <a href="https://www.youtube.com/watch?v=VIDEO_ID2" target="_blank" class="bg-white text-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-blue-500/30 transition block fade-stagger">
-        <img src="images/thumbnail2.jpg" alt="Vlog 2 Thumbnail" class="w-full h-48 object-cover">
-        <div class="p-4">
-          <h3 class="font-semibold text-lg text-blue-800">Inside the Casino Floor</h3>
-          <p class="text-gray-600 text-sm mt-1">Take a walk with me through the casino floor — the lights, the games, the thrill!</p>
-        </div>
-      </a>
-
-      <!-- Vlog 2 -->
-      <a href="https://www.youtube.com/watch?v=VIDEO_ID3" target="_blank" class="bg-white text-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-blue-500/30 transition block fade-stagger">
-        <img src="images/thumbnail2.jpg" alt="Vlog 3 Thumbnail" class="w-full h-48 object-cover">
-        <div class="p-4">
-          <h3 class="font-semibold text-lg text-blue-800">Inside the Casino Floor</h3>
-          <p class="text-gray-600 text-sm mt-1">Take a walk with me through the casino floor — the lights, the games, the thrill!</p>
-        </div>
-      </a>
-
-      <!-- Vlog 2 -->
-      <a href="https://www.youtube.com/watch?v=VIDEO_ID4" target="_blank" class="bg-white text-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-blue-500/30 transition block fade-stagger">
-        <img src="images/thumbnail2.jpg" alt="Vlog 4 Thumbnail" class="w-full h-48 object-cover">
-        <div class="p-4">
-          <h3 class="font-semibold text-lg text-blue-800">Inside the Casino Floor</h3>
-          <p class="text-gray-600 text-sm mt-1">Take a walk with me through the casino floor — the lights, the games, the thrill!</p>
-        </div>
-      </a>
-
-      <!-- Vlog 3 -->
-      <a href="https://www.youtube.com/watch?v=VIDEO_ID5" target="_blank" class="bg-white text-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-blue-500/30 transition block fade-stagger">
-        <img src="images/thumbnail3.jpg" alt="Vlog 5 Thumbnail" class="w-full h-48 object-cover">
-        <div class="p-4">
-          <h3 class="font-semibold text-lg text-blue-800">Casino Life & Tips</h3>
-          <p class="text-gray-600 text-sm mt-1">Sharing some casino etiquette and smart strategies I’ve learned along the way.</p>
-        </div>
-      </a>
+    <div class="scroll-container px-4">
+      <!-- Repeat vlog cards (10 placeholders) -->
+      <!-- You can replace VIDEO_IDs and thumbnails later -->
+      ${[...Array(10)].map((_, i) => `
+        <a href="https://www.youtube.com/watch?v=VIDEO_ID${i+1}" target="_blank" class="bg-white text-gray-800 rounded-xl shadow-md overflow-hidden vlog-card">
+          <img src="images/thumbnail${i+1}.jpg" alt="Vlog ${i+1} Thumbnail" class="w-full h-48 object-cover">
+          <div class="p-4">
+            <h3 class="font-semibold text-lg text-blue-800">Vlog Title ${i+1}</h3>
+            <p class="text-gray-600 text-sm mt-1">Quick description for vlog ${i+1} — replace later.</p>
+          </div>
+        </a>
+      `).join('')}
     </div>
   </section>
 
@@ -153,9 +165,7 @@
     <p class="text-sm mt-2">Follow me on YouTube and Facebook for more casino adventures 🎲</p>
   </footer>
 
-  <!-- ===============================
-       ✨ SCRIPTS
-  =================================-->
+  <!-- SCRIPTS -->
   <script>
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -167,32 +177,18 @@
       });
     });
 
-    // Fade-up for sections
+    // Fade-up on scroll
     const faders = document.querySelectorAll('.fade-up');
-    const observerOptions = { threshold: 0.2, rootMargin: "0px 0px -50px 0px" };
+    const appearOptions = { threshold: 0.2, rootMargin: "0px 0px -50px 0px" };
     const appearOnScroll = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         entry.target.classList.add('show');
         observer.unobserve(entry.target);
       });
-    }, observerOptions);
+    }, appearOptions);
 
     faders.forEach(fader => appearOnScroll.observe(fader));
-
-    // Staggered vlog animation
-    const staggerItems = document.querySelectorAll('.fade-stagger');
-    const staggerObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('show'), index * 150);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
-
-    staggerItems.forEach(item => staggerObserver.observe(item));
   </script>
-
 </body>
 </html>
