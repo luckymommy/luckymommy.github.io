@@ -39,33 +39,31 @@
       animation: slowZoom 30s ease-in-out infinite alternate;
     }
 
-    /* 🌌 Hero Panel Style — dark pastel with glow */
-    .dark-pastel-panel {
-      background-color: rgba(10, 26, 47, 0.85);
-      border: 1px solid rgba(0, 102, 255, 0.3);
+    /* 🌌 Dark Red Hero Panel with Glow */
+    .dark-red-panel {
+      background-color: rgba(60, 0, 0, 0.75);
+      border: 1px solid rgba(120, 0, 0, 0.3);
       box-shadow:
-        0 8px 30px rgba(0, 0, 0, 0.5),
-        0 0 25px rgba(0, 102, 255, 0.25);
+        0 8px 30px rgba(0, 0, 0, 0.6),
+        0 0 25px rgba(150, 0, 0, 0.25);
       backdrop-filter: blur(12px);
       transition: box-shadow 0.5s ease-in-out;
     }
 
-    /* Subtle pulsing neon glow */
-    @keyframes softPulse {
-      0% { box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 20px rgba(0,102,255,0.25); }
-      50% { box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 35px rgba(0,102,255,0.45); }
-      100% { box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 20px rgba(0,102,255,0.25); }
+    @keyframes softPulseRed {
+      0% { box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 20px rgba(180,0,0,0.25); }
+      50% { box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 35px rgba(200,0,0,0.45); }
+      100% { box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 20px rgba(180,0,0,0.25); }
     }
 
     .hero-glow {
-      animation: softPulse 6s ease-in-out infinite;
+      animation: softPulseRed 6s ease-in-out infinite;
     }
 
-    /* 🔹 Glow intensifies on hover */
-    .dark-pastel-panel:hover {
+    .dark-red-panel:hover {
       box-shadow:
         0 8px 35px rgba(0, 0, 0, 0.6),
-        0 0 45px rgba(0, 153, 255, 0.55);
+        0 0 45px rgba(200, 0, 0, 0.55);
       transition: box-shadow 0.3s ease-in-out;
     }
 
@@ -95,7 +93,7 @@
 
     .vlog-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 0 20px rgba(0, 102, 255, 0.4);
+      box-shadow: 0 0 20px rgba(180, 0, 0, 0.5);
     }
   </style>
 </head>
@@ -104,16 +102,20 @@
 
   <!-- HERO SECTION -->
   <header class="relative h-screen flex items-center justify-center text-center overflow-hidden px-6 md:px-12">
+    <!-- Casino background with red tint -->
     <img src="images/hero-bg.jpg" alt="Casino background" class="absolute inset-0 w-full h-full object-cover bg-zoom">
-    <div class="absolute inset-0 bg-blue-950/40"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-[#3b0000]/80 via-[#2a0000]/70 to-[#150000]/90"></div>
 
-    <div class="relative z-10 flex flex-col md:flex-row items-center gap-8 p-10 md:p-16 rounded-3xl dark-pastel-panel hero-glow fade-up-hero">
-      <img src="images/profile.jpg" alt="LuckyMommy Profile" class="w-44 h-44 rounded-full object-cover border-4 border-blue-800 shadow-xl transform hover:scale-105 transition-transform duration-300">
+    <!-- Floating transparent hero box -->
+    <div class="relative z-10 flex flex-col md:flex-row items-center gap-8 p-10 md:p-16 rounded-3xl dark-red-panel hero-glow fade-up-hero">
+      <!-- PROFILE IMAGE -->
+      <img src="images/profile.jpg" alt="LuckyMommy Profile" class="w-44 h-44 rounded-full object-cover border-4 border-red-900 shadow-xl transform hover:scale-105 transition-transform duration-300">
       
-      <div class="text-center md:text-left text-white drop-shadow-lg">
-        <h1 class="text-5xl md:text-6xl font-bold">🎰 LuckyMommy</h1>
-        <p class="text-lg mt-3 text-blue-100">Jennifer Reyes Sing — Casino Vlogs, Wins & Lifestyle</p>
-        <a href="#vlogs" class="mt-6 inline-block bg-blue-700 text-white font-semibold py-2 px-6 rounded-full hover:bg-blue-600 transition">
+      <!-- TEXT CONTENT -->
+      <div class="text-center md:text-left text-red-50 drop-shadow-lg">
+        <h1 class="text-5xl md:text-6xl font-bold text-red-100">🎰 LuckyMommy</h1>
+        <p class="text-lg mt-3 text-red-200">Jennifer Reyes Sing — Casino Vlogs, Wins & Lifestyle</p>
+        <a href="#vlogs" class="mt-6 inline-block bg-red-800 text-white font-semibold py-2 px-6 rounded-full hover:bg-red-700 transition">
           Watch My Vlogs
         </a>
       </div>
@@ -121,13 +123,13 @@
   </header>
 
   <!-- ABOUT SECTION -->
-  <section id="about" class="py-16 px-6 bg-blue-50 fade-up">
+  <section id="about" class="py-16 px-6 bg-red-50 fade-up">
     <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
       <img src="images/about-photo.jpg" alt="Jennifer Reyes Sing" class="rounded-2xl shadow-lg object-cover w-full h-80">
       <div>
-        <h2 class="text-3xl font-bold text-blue-900 mb-4">About LuckyMommy</h2>
+        <h2 class="text-3xl font-bold text-red-900 mb-4">About LuckyMommy</h2>
         <p class="text-gray-700 leading-relaxed">
-          Hi! I’m <span class="text-blue-800 font-semibold">Jennifer Reyes Sing</span>, also known online as <span class="italic">LuckyMommy</span>.  
+          Hi! I’m <span class="text-red-800 font-semibold">Jennifer Reyes Sing</span>, also known online as <span class="italic">LuckyMommy</span>.  
           I share my casino adventures, gaming experiences, and lifestyle moments — showing both the fun and strategy behind the games I love.
         </p>
         <p class="text-gray-600 mt-4">
@@ -137,43 +139,44 @@
     </div>
   </section>
 
-  <!-- VLOG SECTION (HORIZONTAL SCROLL) -->
-  <section id="vlogs" class="py-16 px-6 bg-blue-900 text-white fade-up">
+  <!-- VLOG SECTION -->
+  <section id="vlogs" class="py-16 px-6 bg-red-900 text-white fade-up">
     <div class="max-w-6xl mx-auto text-center mb-10">
       <h2 class="text-3xl font-bold text-white">🎥 Latest Vlogs</h2>
-      <p class="text-blue-200 mt-2">Scroll right → or swipe to see more vlogs!</p>
+      <p class="text-red-200 mt-2">Scroll right → or swipe to see more vlogs!</p>
     </div>
 
     <div class="scroll-container px-4">
-      <!-- Repeat vlog cards (10 placeholders) -->
-      <!-- You can replace VIDEO_IDs and thumbnails later -->
-      ${[...Array(10)].map((_, i) => `
-        <a href="https://www.youtube.com/watch?v=VIDEO_ID${i+1}" target="_blank" class="bg-white text-gray-800 rounded-xl shadow-md overflow-hidden vlog-card">
-          <img src="images/thumbnail${i+1}.jpg" alt="Vlog ${i+1} Thumbnail" class="w-full h-48 object-cover">
-          <div class="p-4">
-            <h3 class="font-semibold text-lg text-blue-800">Vlog Title ${i+1}</h3>
-            <p class="text-gray-600 text-sm mt-1">Quick description for vlog ${i+1} — replace later.</p>
-          </div>
-        </a>
-      `).join('')}
+      <!-- 10 vlog cards -->
+      <script>
+        for (let i = 1; i <= 10; i++) {
+          document.write(`
+            <a href="https://www.youtube.com/watch?v=VIDEO_ID${i}" target="_blank" class="bg-white text-gray-800 rounded-xl shadow-md overflow-hidden vlog-card">
+              <img src="images/thumbnail${i}.jpg" alt="Vlog ${i} Thumbnail" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <h3 class="font-semibold text-lg text-red-800">Vlog Title ${i}</h3>
+                <p class="text-gray-600 text-sm mt-1">Quick description for vlog ${i} — replace later.</p>
+              </div>
+            </a>
+          `);
+        }
+      </script>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="bg-blue-950 py-8 text-center text-blue-100 border-t border-blue-800 fade-up">
+  <footer class="bg-[#1a0000] py-8 text-center text-red-100 border-t border-red-800 fade-up">
     <p>© 2025 <span class="text-white font-semibold">Jennifer Reyes Sing (LuckyMommy)</span>. All Rights Reserved.</p>
-    <p class="text-sm mt-2">Follow me on YouTube and Facebook for more casino adventures 🎲</p>
+    <p class="text-sm mt-2">Follow me on YouTube and Facebook for more casino adventures 🎰</p>
   </footer>
 
-  <!-- SCRIPTS -->
+  <!-- SCRIPT -->
   <script>
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener("click", function(e) {
         e.preventDefault();
-        document.querySelector(this.getAttribute("href")).scrollIntoView({
-          behavior: "smooth"
-        });
+        document.querySelector(this.getAttribute("href")).scrollIntoView({ behavior: "smooth" });
       });
     });
 
