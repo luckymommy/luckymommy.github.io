@@ -303,7 +303,6 @@
           entries.forEach(entry => {
             if (!entry.isIntersecting) return;
             const delay = parseFloat(entry.target.dataset.animateDelay || 0.12);
-            playAnim(entry.target, t, delay);
             co.unobserve(entry.target);
           });
         }, { threshold: 0.2 });
