@@ -77,7 +77,7 @@
       <div class="text-center md:text-left animate-fadeUp">
         <h1 class="text-5xl md:text-6xl font-bold text-white drop-shadow-lg">LuckyMommy</h1>
         <p class="text-lg mt-3 text-gray-200">Jennifer Reyes Sing — Casino Vlogs, Wins & Lifestyle</p>
-        <a href="https://www.youtube.com/@YourChannelName" 
+        <a href="https://www.youtube.com/@YourChannelName"
            target="_blank"
            class="mt-6 inline-block bg-red-700 text-white font-semibold py-2 px-6 rounded-full hover:bg-red-600 hover-golden-pulse transition">
           Watch My Vlogs
@@ -133,7 +133,7 @@
             card.target = "_blank";
             card.className = "vlog-card inline-block bg-white text-gray-900 rounded-xl shadow-md overflow-hidden hover-levitate transition w-72 opacity-0";
             card.style.animation = `fadeUp 0.8s ease-out forwards`;
-            card.style.animationDelay = `${i * 0.2}s`; // stagger effect
+            card.style.animationDelay = `${i * 0.2}s`;
             card.innerHTML = `
               <img src="${v.thumb}" alt="${v.title}" class="w-full h-44 object-cover">
               <div class="p-4">
@@ -142,6 +142,20 @@
               </div>
             `;
             vlogContainer.appendChild(card);
+          });
+
+          // fade-up on scroll observer
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.style.animationPlayState = "running";
+                entry.target.style.opacity = 1;
+              }
+            });
+          }, { threshold: 0.2 });
+
+          document.querySelectorAll('.vlog-card').forEach(card => {
+            observer.observe(card);
           });
         });
       </script>
