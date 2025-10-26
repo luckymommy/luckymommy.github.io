@@ -107,31 +107,27 @@
     vlogContainer.appendChild(card);
   });
 
-  // Animate hero, about, and footer on vertical scroll
+  // Animate hero, about, footer on scroll **once**
   const observer = new IntersectionObserver((entries, obs)=>{
     entries.forEach(entry=>{
       if(entry.isIntersecting){
-        // Hero stagger
         if(entry.target.tagName === "HEADER"){
           const elems = entry.target.querySelectorAll('.anim-hidden');
           elems.forEach((el,i)=>{
             setTimeout(()=>{
               el.classList.add('anim-fadeUp');
               el.style.opacity=1;
-            }, i*200); // 0.2s stagger
+            }, i*200);
           });
-        }
-        // About section: left/right animations
-        else if(entry.target.id === "about"){
+        } else if(entry.target.id === "about"){
           const img = entry.target.querySelector('img');
           const txt = entry.target.querySelector('div');
           img.classList.add('anim-fadeLeft'); img.style.opacity=1;
           txt.classList.add('anim-fadeRight'); txt.style.opacity=1;
-        }
-        else { // footer
+        } else { // footer
           entry.target.classList.add('anim-fadeUp'); entry.target.style.opacity=1;
         }
-        obs.unobserve(entry.target);
+        obs.unobserve(entry.target); // <-- ensures it triggers only once
       }
     });
   }, {threshold:0.2});
