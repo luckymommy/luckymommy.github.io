@@ -15,9 +15,9 @@
 
   /* ---------- Animations ---------- */
   .anim-hidden { opacity:0; transform:translateY(20px); }
-  .anim-fadeUp { animation: fadeUp 0.8s ease forwards; }
-  .anim-fadeLeft { animation: fadeLeft 1.2s ease forwards; }
-  .anim-fadeRight { animation: fadeRight 1.2s ease forwards; }
+  .anim-fadeUp { animation: fadeUp 0.9s ease forwards; }
+  .anim-fadeLeft { animation: fadeLeft 1s ease forwards; }
+  .anim-fadeRight { animation: fadeRight 1s ease forwards; }
 
   /* ---------- Hover effects ---------- */
   .hover-levitate { transition: transform 0.3s ease, box-shadow 0.3s ease; }
@@ -109,7 +109,7 @@
     vlogContainer.appendChild(card);
   });
 
-  // IntersectionObserver for hero, about, footer only
+  // IntersectionObserver for hero, about, and footer
   const observer = new IntersectionObserver((entries, obs)=>{
     entries.forEach(entry=>{
       if(entry.isIntersecting){
