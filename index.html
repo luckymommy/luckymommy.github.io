@@ -19,11 +19,10 @@
   .anim-fadeLeft { animation: fadeLeft 1.2s ease forwards; }
   .anim-fadeRight { animation: fadeRight 1.2s ease forwards; }
 
-  /* Hover levitate + pulse for cards */
+  /* ---------- Hover effects ---------- */
   .hover-levitate { transition: transform 0.4s ease, box-shadow 0.4s ease; }
   .hover-levitate:hover { transform: translateY(-10px) scale(1.03); animation: pulseGlow 1.5s infinite alternate; }
 
-  /* Hover pulse for buttons */
   .hover-golden-pulse { transition: transform 0.4s ease, box-shadow 0.4s ease; }
   .hover-golden-pulse:hover { transform: scale(1.05); animation: pulseGlow 1.5s infinite alternate; }
 
@@ -95,12 +94,14 @@
 
   const vlogContainer = document.getElementById('vlogContainer');
 
-  vlogs.forEach((v,i)=>{
+  // Render vlog cards
+  vlogs.forEach((v, i)=>{
     const card = document.createElement('a');
-    card.href=v.link;
-    card.target="_blank";
-    card.className="vlog-card inline-block bg-white text-gray-900 rounded-xl shadow-md overflow-hidden hover-levitate transition w-72";
-    card.innerHTML=`
+    card.href = v.link;
+    card.target = "_blank";
+    card.className = "vlog-card inline-block bg-white text-gray-900 rounded-xl shadow-md overflow-hidden hover-levitate transition w-72";
+    card.dataset.animateDelay = (i * 0.15).toString(); // stagger delay
+    card.innerHTML = `
       <img src="${v.thumb}" alt="${v.title}" class="w-full h-44 object-cover">
       <div class="p-4">
         <h3 class="font-semibold text-lg text-red-800">${v.title}</h3>
@@ -110,17 +111,21 @@
     vlogContainer.appendChild(card);
   });
 
-  // IntersectionObserver only triggers on vertical scroll into view
-  const observer = new IntersectionObserver((entries)=>{
+  // IntersectionObserver for one-time scroll animations
+  const observer = new IntersectionObserver((entries, obs)=>{
     entries.forEach(entry=>{
       if(entry.isIntersecting){
-        entry.target.classList.add('anim-fadeUp');
-        entry.target.style.opacity=1;
+        const delay = parseFloat(entry.target.dataset.animateDelay || 0);
+        setTimeout(()=>{
+          entry.target.classList.add('anim-fadeUp');
+          entry.target.style.opacity = 1;
+        }, delay * 1000);
+        obs.unobserve(entry.target); // animate once
       }
     });
   }, {threshold:0.2});
 
-  // Animate hero, about, footer, and vlog cards vertically on scroll
+  // Observe all anim elements
   document.querySelectorAll('[data-animate], .vlog-card').forEach(el=>observer.observe(el));
 </script>
 </body>
