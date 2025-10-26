@@ -6,7 +6,6 @@
   <title>LuckyMommy Vlog | Jennifer Reyes Sing</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-  <!-- ANIMATION LIBRARY -->
   <style>
     @keyframes fadeUp {
       0% { opacity: 0; transform: translateY(30px); }
@@ -24,36 +23,37 @@
       animation: fadeIn 1.2s ease-out forwards;
     }
 
-    /* Hover "levitate" effect with golden pulse */
-    @keyframes pulseGlow {
-      0% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3), 0 0 30px rgba(255, 215, 0, 0.1); }
-      50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.6), 0 0 45px rgba(255, 215, 0, 0.4); }
-      100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3), 0 0 30px rgba(255, 215, 0, 0.1); }
-    }
-
+    /* Hover "levitate" + golden pulse */
     .hover-levitate {
       transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
     .hover-levitate:hover {
       transform: translateY(-10px) scale(1.03);
-      animation: pulseGlow 1.5s infinite;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.4), 0 0 15px rgba(255, 215, 0, 0.25);
+      animation: pulseGlow 1.5s infinite alternate;
+    }
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+      100% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.6); }
     }
 
-    /* Golden pulse for button hover */
-    .hover-golden-pulse {
-      transition: all 0.3s ease;
-    }
-    .hover-golden-pulse:hover {
-      animation: pulseGlow 1.5s infinite;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-      background-color: #b91c1c; /* slightly brighter red */
+    /* Description scroll only when hovered */
+    @keyframes scrollText {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
-    /* Smooth horizontal scroll */
-    .scroll-smooth {
-      scroll-behavior: smooth;
+    .scrolling-text {
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
     }
+
+    .vlog-card:hover .scrolling-text {
+      animation: scrollText 6s linear infinite;
+    }
+
+    .scroll-smooth { scroll-behavior: smooth; }
   </style>
 </head>
 
@@ -61,17 +61,15 @@
 
   <!-- HERO SECTION -->
   <header class="relative h-screen flex items-center justify-center text-center overflow-hidden">
-    <img src="images/casino-bg.jpg" alt="Casino background" class="absolute inset-0 w-full h-full object-cover opacity-30">
+    <img src="images/hero-bg.jpg" alt="Casino background" class="absolute inset-0 w-full h-full object-cover opacity-30">
     
     <div class="relative z-10 flex flex-col md:flex-row items-center gap-8 bg-white/20 p-8 rounded-3xl backdrop-blur-md shadow-2xl animate-fadeIn">
-      <!-- PROFILE IMAGE -->
       <img src="images/profile.jpg" alt="LuckyMommy Profile" class="w-40 h-40 rounded-full object-cover border-4 border-red-800 shadow-lg animate-fadeUp">
       
-      <!-- TEXT CONTENT -->
       <div class="text-center md:text-left animate-fadeUp">
         <h1 class="text-5xl md:text-6xl font-bold text-white drop-shadow-lg">LuckyMommy</h1>
         <p class="text-lg mt-3 text-gray-200">Jennifer Reyes Sing — Casino Vlogs, Wins & Lifestyle</p>
-        <a href="#vlogs" class="mt-6 inline-block bg-red-700 text-white font-semibold py-2 px-6 rounded-full hover-golden-pulse transition">
+        <a href="#vlogs" class="mt-6 inline-block bg-red-700 text-white font-semibold py-2 px-6 rounded-full hover:bg-red-600 transition">
           Watch My Vlogs
         </a>
       </div>
@@ -123,12 +121,12 @@
             const card = document.createElement("a");
             card.href = v.link;
             card.target = "_blank";
-            card.className = "inline-block bg-white text-gray-900 rounded-xl shadow-md overflow-hidden hover-levitate transition w-72";
+            card.className = "vlog-card inline-block bg-white text-gray-900 rounded-xl shadow-md overflow-hidden hover-levitate transition w-72";
             card.innerHTML = `
               <img src="${v.thumb}" alt="${v.title}" class="w-full h-44 object-cover">
               <div class="p-4">
                 <h3 class="font-semibold text-lg text-red-800">${v.title}</h3>
-                <p class="text-gray-600 text-sm mt-1">${v.desc}</p>
+                <p class="scrolling-text text-gray-600 text-sm mt-1">${v.desc}</p>
               </div>
             `;
             vlogContainer.appendChild(card);
