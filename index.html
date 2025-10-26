@@ -5,36 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LuckyMommy Vlog | Jennifer Reyes Sing</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
   <style>
-    /* Smooth animations and hover effects */
-    .fade-in {
-      animation: fadeIn 1s ease-in-out forwards;
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
+    .animate-fadeUp {
+      animation: fadeUp 1s ease-out forwards;
+    }
+
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 1.2s ease-out forwards;
     }
 
-    /* Pulse / levitate hover */
-    .vlog-card:hover {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 10px 20px rgba(255, 0, 0, 0.3);
+    /* Hover "levitate" + golden pulse */
+    .hover-levitate {
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
-
-    /* Infinite sliding text for vlog descriptions */
-    .scrolling-text {
-      white-space: nowrap;
-      overflow: hidden;
-      position: relative;
+    .hover-levitate:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.4), 0 0 15px rgba(255, 215, 0, 0.25);
+      animation: pulseGlow 1.5s infinite alternate;
     }
-    .scrolling-text p {
-      display: inline-block;
-      padding-left: 100%;
-      animation: scrollText 15s linear infinite;
-    }
-    @keyframes scrollText {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+      100% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.6); }
     }
 
     /* Golden pulse for button */
@@ -46,40 +46,40 @@
       box-shadow: 0 0 25px rgba(255, 215, 0, 0.5), 0 0 15px rgba(255, 215, 0, 0.3);
       animation: pulseGlow 1.5s infinite alternate;
     }
-    @keyframes pulseGlow {
-      0% { box-shadow: 0 0 10px rgba(255,215,0,0.3); }
-      100% { box-shadow: 0 0 25px rgba(255,215,0,0.8); }
+
+    /* Description scroll only when hovered */
+    @keyframes scrollText {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .scrolling-text {
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .vlog-card:hover .scrolling-text {
+      animation: scrollText 6s linear infinite;
     }
 
-    /* Staggered fade-in for vlog cards */
-    .vlog-card {
-      opacity: 0;
-      transform: translateY(30px);
-      animation: vlogFadeIn 1s ease forwards;
-    }
-    @keyframes vlogFadeIn {
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .scroll-smooth { scroll-behavior: smooth; }
   </style>
 </head>
 
-<body class="bg-white text-gray-800 font-sans">
+<body class="bg-black text-gray-100 font-sans scroll-smooth">
 
   <!-- HERO SECTION -->
-  <header class="relative h-screen flex items-center justify-center text-center">
-    <img src="images/casino-bg.jpg" alt="Casino background" class="absolute inset-0 w-full h-full object-cover opacity-30">
+  <header class="relative h-screen flex items-center justify-center text-center overflow-hidden">
+    <img src="images/hero-bg.jpg" alt="Casino background" class="absolute inset-0 w-full h-full object-cover opacity-30">
     
-    <div class="relative z-10 flex flex-col md:flex-row items-center gap-8 bg-white/60 p-8 rounded-3xl backdrop-blur-sm shadow-xl fade-in">
-      <!-- PROFILE IMAGE -->
-      <img src="images/profile.jpg" alt="LuckyMommy Profile" class="w-40 h-40 rounded-full object-cover border-4 border-red-900 shadow-lg animate-pulse">
+    <div class="relative z-10 flex flex-col md:flex-row items-center gap-8 bg-white/20 p-8 rounded-3xl backdrop-blur-md shadow-2xl animate-fadeIn">
+      <img src="images/profile.jpg" alt="LuckyMommy Profile" class="w-40 h-40 rounded-full object-cover border-4 border-red-800 shadow-lg animate-fadeUp">
       
-      <!-- TEXT CONTENT -->
-      <div class="text-center md:text-left">
-        <h1 class="text-5xl md:text-6xl font-bold text-red-900 drop-shadow-sm">LuckyMommy</h1>
-        <p class="text-lg mt-3 text-gray-700">Jennifer Reyes Sing — Casino Vlogs, Wins & Lifestyle</p>
+      <div class="text-center md:text-left animate-fadeUp">
+        <h1 class="text-5xl md:text-6xl font-bold text-white drop-shadow-lg">LuckyMommy</h1>
+        <p class="text-lg mt-3 text-gray-200">Jennifer Reyes Sing — Casino Vlogs, Wins & Lifestyle</p>
         <a href="https://www.youtube.com/@YourChannelName" 
            target="_blank"
-           class="mt-6 inline-block bg-red-900 text-white font-semibold py-2 px-6 rounded-full hover:bg-red-800 hover-golden-pulse transition">
+           class="mt-6 inline-block bg-red-700 text-white font-semibold py-2 px-6 rounded-full hover:bg-red-600 hover-golden-pulse transition">
           Watch My Vlogs
         </a>
       </div>
@@ -87,14 +87,14 @@
   </header>
 
   <!-- ABOUT SECTION -->
-  <section id="about" class="py-16 px-6 bg-red-950 text-white fade-in">
+  <section id="about" class="py-16 px-6 bg-red-900 text-white">
     <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-      <img src="images/about-photo.jpg" alt="Jennifer Reyes Sing" class="rounded-2xl shadow-lg object-cover w-full h-80 transform hover:scale-105 transition duration-700">
-      <div>
-        <h2 class="text-3xl font-bold text-white mb-4">About LuckyMommy</h2>
+      <img src="images/about-photo.jpg" alt="Jennifer Reyes Sing" class="rounded-2xl shadow-2xl object-cover w-full h-80 animate-fadeUp">
+      <div class="animate-fadeUp">
+        <h2 class="text-3xl font-bold text-yellow-100 mb-4">About LuckyMommy</h2>
         <p class="text-gray-200 leading-relaxed">
-          Hi! I’m <span class="text-red-300 font-semibold">Jennifer Reyes Sing</span>, also known online as <span class="italic">LuckyMommy</span>.  
-          I share my casino adventures, gaming experiences, and lifestyle moments — showing both the fun and strategy behind the games I love.
+          Hi! I’m <span class="text-yellow-300 font-semibold">Jennifer Reyes Sing</span>, also known online as <span class="italic">LuckyMommy</span>.  
+          I share my casino adventures, gaming experiences, and lifestyle moments — showing both the fun and the strategy behind the games I love.
         </p>
         <p class="text-gray-300 mt-4">
           This vlog is all about confidence, timing, and a bit of luck. 🎲 Join me in every spin, bet, and win — and let’s enjoy the thrill together!
@@ -104,124 +104,52 @@
   </section>
 
   <!-- VLOG SECTION -->
-  <section id="vlogs" class="py-16 px-6 bg-red-900 text-white fade-in">
-    <div class="max-w-6xl mx-auto text-center mb-10">
+  <section id="vlogs" class="py-16 px-6 bg-black text-white overflow-x-auto whitespace-nowrap">
+    <div class="max-w-6xl mx-auto text-center mb-10 animate-fadeUp">
       <h2 class="text-3xl font-bold text-white">🎥 Latest Vlogs</h2>
-      <p class="text-red-200 mt-2">Click a video to watch directly on YouTube!</p>
+      <p class="text-gray-400 mt-2">Scroll right and click a video to watch directly on YouTube!</p>
     </div>
 
-    <!-- Horizontal Scrollable Vlog Container -->
-    <div class="overflow-x-auto whitespace-nowrap pb-6">
-      <div class="inline-flex space-x-8 px-4">
+    <div class="flex space-x-6 px-4 pb-6 w-max mx-auto">
+      <script>
+        const vlogs = [
+          {title:"Big Win Night!",desc:"My biggest casino win — an unforgettable evening!",thumb:"images/thumbnail1.jpg",link:"https://www.youtube.com/watch?v=VIDEO_ID1"},
+          {title:"Inside the Casino Floor",desc:"Take a walk with me through the casino lights and thrill!",thumb:"images/thumbnail2.jpg",link:"https://www.youtube.com/watch?v=VIDEO_ID2"},
+          {title:"Casino Life & Tips",desc:"Etiquette, fun, and smart strategies!",thumb:"images/thumbnail3.jpg",link:"https://www.youtube.com/watch?v=VIDEO_ID3"},
+          {title:"Lucky Streak!",desc:"How I hit back-to-back wins on my favorite slot!",thumb:"images/thumbnail4.jpg",link:"#"},
+          {title:"Casino Fashion Night",desc:"Glamour, style, and a hint of risk!",thumb:"images/thumbnail5.jpg",link:"#"},
+          {title:"Weekend Game Run",desc:"How to plan a quick casino getaway!",thumb:"images/thumbnail6.jpg",link:"#"},
+          {title:"Jackpot Moments",desc:"The moment luck strikes — captured live!",thumb:"images/thumbnail7.jpg",link:"#"},
+          {title:"Behind the Table",desc:"A peek behind the scenes of casino games!",thumb:"images/thumbnail8.jpg",link:"#"},
+          {title:"Casino Vibes Only",desc:"Relaxing and winning — the best combo!",thumb:"images/thumbnail9.jpg",link:"#"},
+          {title:"New Casino Review",desc:"Exploring a new casino and rating the experience!",thumb:"images/thumbnail10.jpg",link:"#"},
+        ];
 
-        <!-- 10 vlog cards -->
-        <a href="https://www.youtube.com/watch?v=VIDEO_ID1" target="_blank" class="vlog-card bg-white text-gray-800 rounded-xl shadow-md overflow-hidden transition transform hover:shadow-red-500/30 w-80 inline-block" style="animation-delay: 0s;">
-          <img src="images/thumbnail1.jpg" alt="Vlog 1 Thumbnail" class="w-full h-48 object-cover">
-          <div class="p-4">
-            <h3 class="font-semibold text-lg text-red-900">Big Win Night!</h3>
-            <div class="scrolling-text">
-              <p class="text-gray-600 text-sm mt-1">My biggest casino win — an unforgettable evening of luck and excitement!</p>
-            </div>
-          </div>
-        </a>
-
-        <a href="https://www.youtube.com/watch?v=VIDEO_ID2" target="_blank" class="vlog-card bg-white text-gray-800 rounded-xl shadow-md overflow-hidden transition transform hover:shadow-red-500/30 w-80 inline-block" style="animation-delay: 0.1s;">
-          <img src="images/thumbnail2.jpg" alt="Vlog 2 Thumbnail" class="w-full h-48 object-cover">
-          <div class="p-4">
-            <h3 class="font-semibold text-lg text-red-900">Inside the Casino Floor</h3>
-            <div class="scrolling-text">
-              <p class="text-gray-600 text-sm mt-1">Take a walk with me through the casino floor — the lights, the games, the thrill!</p>
-            </div>
-          </div>
-        </a>
-
-        <a href="https://www.youtube.com/watch?v=VIDEO_ID3" target="_blank" class="vlog-card bg-white text-gray-800 rounded-xl shadow-md overflow-hidden transition transform hover:shadow-red-500/30 w-80 inline-block" style="animation-delay: 0.2s;">
-          <img src="images/thumbnail3.jpg" alt="Vlog 3 Thumbnail" class="w-full h-48 object-cover">
-          <div class="p-4">
-            <h3 class="font-semibold text-lg text-red-900">Casino Life & Tips</h3>
-            <div class="scrolling-text">
-              <p class="text-gray-600 text-sm mt-1">Sharing some casino etiquette and smart strategies I’ve learned along the way.</p>
-            </div>
-          </div>
-        </a>
-
-        <!-- 7 more vlog placeholders -->
-        <a href="#" class="vlog-card bg-white text-gray-800 rounded-xl shadow-md overflow-hidden transition transform hover:shadow-red-500/30 w-80 inline-block" style="animation-delay: 0.3s;">
-          <img src="images/thumbnail4.jpg" alt="Vlog 4 Thumbnail" class="w-full h-48 object-cover">
-          <div class="p-4">
-            <h3 class="font-semibold text-lg text-red-900">New Slot Challenge!</h3>
-            <div class="scrolling-text">
-              <p class="text-gray-600 text-sm mt-1">Testing my luck on a brand new slot game — will I hit the jackpot?</p>
-            </div>
-          </div>
-        </a>
-
-        <a href="#" class="vlog-card bg-white text-gray-800 rounded-xl shadow-md overflow-hidden transition transform hover:shadow-red-500/30 w-80 inline-block" style="animation-delay: 0.4s;">
-          <img src="images/thumbnail5.jpg" alt="Vlog 5 Thumbnail" class="w-full h-48 object-cover">
-          <div class="p-4">
-            <h3 class="font-semibold text-lg text-red-900">Weekend Casino Tour</h3>
-            <div class="scrolling-text">
-              <p class="text-gray-600 text-sm mt-1">A weekend full of games, glitz, and great company — come explore with me!</p>
-            </div>
-          </div>
-        </a>
-
-        <a href="#" class="vlog-card bg-white text-gray-800 rounded-xl shadow-md overflow-hidden transition transform hover:shadow-red-500/30 w-80 inline-block" style="animation-delay: 0.5s;">
-          <img src="images/thumbnail6.jpg" alt="Vlog 6 Thumbnail" class="w-full h-48 object-cover">
-          <div class="p-4">
-            <h3 class="font-semibold text-lg text-red-900">Lucky Streak Stories</h3>
-            <div class="scrolling-text">
-              <p class="text-gray-600 text-sm mt-1">When luck just doesn’t stop — my favorite streak moments on camera!</p>
-            </div>
-          </div>
-        </a>
-
-        <a href="#" class="vlog-card bg-white text-gray-800 rounded-xl shadow-md overflow-hidden transition transform hover:shadow-red-500/30 w-80 inline-block" style="animation-delay: 0.6s;">
-          <img src="images/thumbnail7.jpg" alt="Vlog 7 Thumbnail" class="w-full h-48 object-cover">
-          <div class="p-4">
-            <h3 class="font-semibold text-lg text-red-900">Casino Hacks Revealed</h3>
-            <div class="scrolling-text">
-              <p class="text-gray-600 text-sm mt-1">Learn some responsible gaming tricks that can make a difference!</p>
-            </div>
-          </div>
-        </a>
-
-        <a href="#" class="vlog-card bg-white text-gray-800 rounded-xl shadow-md overflow-hidden transition transform hover:shadow-red-500/30 w-80 inline-block" style="animation-delay: 0.7s;">
-          <img src="images/thumbnail8.jpg" alt="Vlog 8 Thumbnail" class="w-full h-48 object-cover">
-          <div class="p-4">
-            <h3 class="font-semibold text-lg text-red-900">My Casino Outfit Looks</h3>
-            <div class="scrolling-text">
-              <p class="text-gray-600 text-sm mt-1">Dressing up for the night — how fashion meets the casino floor.</p>
-            </div>
-          </div>
-        </a>
-
-        <a href="#" class="vlog-card bg-white text-gray-800 rounded-xl shadow-md overflow-hidden transition transform hover:shadow-red-500/30 w-80 inline-block" style="animation-delay: 0.8s;">
-          <img src="images/thumbnail9.jpg" alt="Vlog 9 Thumbnail" class="w-full h-48 object-cover">
-          <div class="p-4">
-            <h3 class="font-semibold text-lg text-red-900">A Lucky Beginner’s Guide</h3>
-            <div class="scrolling-text">
-              <p class="text-gray-600 text-sm mt-1">Tips for first-timers stepping into the casino world — stay smart!</p>
-            </div>
-          </div>
-        </a>
-
-        <a href="#" class="vlog-card bg-white text-gray-800 rounded-xl shadow-md overflow-hidden transition transform hover:shadow-red-500/30 w-80 inline-block" style="animation-delay: 0.9s;">
-          <img src="images/thumbnail10.jpg" alt="Vlog 10 Thumbnail" class="w-full h-48 object-cover">
-          <div class="p-4">
-            <h3 class="font-semibold text-lg text-red-900">Behind the Wins</h3>
-            <div class="scrolling-text">
-              <p class="text-gray-600 text-sm mt-1">What really goes on when the camera stops — real casino insights.</p>
-            </div>
-          </div>
-        </a>
-
-      </div>
+        document.addEventListener("DOMContentLoaded", () => {
+          const vlogContainer = document.querySelector(".flex.space-x-6");
+          vlogs.forEach((v, i) => {
+            const card = document.createElement("a");
+            card.href = v.link;
+            card.target = "_blank";
+            card.className = "vlog-card inline-block bg-white text-gray-900 rounded-xl shadow-md overflow-hidden hover-levitate transition w-72 opacity-0";
+            card.style.animation = `fadeUp 0.8s ease-out forwards`;
+            card.style.animationDelay = `${i * 0.2}s`; // stagger effect
+            card.innerHTML = `
+              <img src="${v.thumb}" alt="${v.title}" class="w-full h-44 object-cover">
+              <div class="p-4">
+                <h3 class="font-semibold text-lg text-red-800">${v.title}</h3>
+                <p class="scrolling-text text-gray-600 text-sm mt-1">${v.desc}</p>
+              </div>
+            `;
+            vlogContainer.appendChild(card);
+          });
+        });
+      </script>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="bg-red-950 py-8 text-center text-red-100 border-t border-red-800 fade-in">
+  <footer class="bg-red-950 py-8 text-center text-red-100 border-t border-red-800 animate-fadeIn">
     <p>© 2025 <span class="text-white font-semibold">Jennifer Reyes Sing (LuckyMommy)</span>. All Rights Reserved.</p>
     <p class="text-sm mt-2">Follow me on YouTube and Facebook for more casino adventures 🎲</p>
   </footer>
