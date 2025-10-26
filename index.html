@@ -303,7 +303,6 @@
           entries.forEach(entry => {
             if (!entry.isIntersecting) return;
             const delay = parseFloat(entry.target.dataset.animateDelay || 0.12);
-            const t = entry.target.dataset.animate || 'fadeUp';
             playAnim(entry.target, t, delay);
             co.unobserve(entry.target);
           });
