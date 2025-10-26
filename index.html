@@ -26,80 +26,74 @@
       0% { opacity: 0; transform: scale(0.96); }
       100% { opacity: 1; transform: scale(1); }
     }
-
-    /* slow golden pulse */
+  
+    /* golden pulse */
     @keyframes pulseGlow {
       0% { box-shadow: 0 0 14px rgba(255,215,0,0.25); }
       50% { box-shadow: 0 0 30px rgba(255,215,0,0.45); }
       100% { box-shadow: 0 0 14px rgba(255,215,0,0.25); }
     }
-
-    /* mild description scroll */
+  
+    /* scrolling text */
     @keyframes scrollText {
       0% { transform: translateX(0%); }
       100% { transform: translateX(-50%); }
     }
-
+  
     /* ---------------------------
-       Utility / animation classes
+       Utility animation classes
        --------------------------- */
     .anim-hidden { opacity: 0; transform: translateY(20px); }
-
     .anim-fadeUp { animation: fadeUp 1.4s ease forwards; }
     .anim-fadeLeft { animation: fadeLeft 1.4s ease forwards; }
     .anim-fadeRight { animation: fadeRight 1.4s ease forwards; }
     .anim-zoomIn { animation: zoomIn 1.4s ease forwards; }
-
-    /* golden pulse reusable */
+  
+    /* ---------------------------
+       Hover Effects Fix
+       --------------------------- */
     .hover-golden-pulse {
-      transition: transform 0.45s ease, box-shadow 0.45s ease;
+      transition: transform 0.5s ease, box-shadow 0.6s ease;
       will-change: transform, box-shadow;
     }
     .hover-golden-pulse:hover {
       transform: scale(1.04);
       animation: pulseGlow 1.6s infinite;
     }
-
-    /* ---------------------------
-       Hover levitate + golden pulse for cards
-       --------------------------- */
+  
+    /* fixed levitate (smooth fade up + no reanimation on hover end) */
     .hover-levitate {
-      transition: transform 0.45s ease, box-shadow 0.45s ease;
+      transition: transform 0.45s ease, box-shadow 0.45s ease, opacity 0.3s ease;
       will-change: transform, box-shadow;
     }
-    /* Fix: ensure hover transform/pulse ALWAYS applies (override any leftover animation) */
     .hover-levitate:hover {
-      transform: translateY(-12px) scale(1.03) !important;
-      animation: pulseGlow 1.6s infinite !important;
-      box-shadow: 0 0 30px rgba(255,215,0,0.45) !important;
+      transform: translateY(-12px) scale(1.03);
+      animation: pulseGlow 1.6s infinite;
+      box-shadow: 0 0 30px rgba(255,215,0,0.45);
     }
-
-    /* ---------------------------
-       Description scroll only when hovered
-       --------------------------- */
+  
+    /* make sure once animation runs, it stays in place */
+    .anim-fadeUp, .anim-fadeLeft, .anim-fadeRight, .anim-zoomIn {
+      animation-fill-mode: forwards;
+    }
+  
+    /* scrolling desc only on hover */
     .scrolling-text {
       display: inline-block;
       white-space: nowrap;
       overflow: hidden;
     }
-    /* triggers scroll on hover */
     .vlog-card:hover .scrolling-text {
       animation: scrollText 6s linear infinite;
     }
-
-    /* ---------------------------
-       Vlog card base style (kept from your design)
-       --------------------------- */
+  
     .vlog-card {
-      /* opacity initially 0, will animate in with JS stagger */
       opacity: 0;
       will-change: transform, opacity;
-      /* ensure animation-fill-mode preserves final state */
-      animation-fill-mode: both;
     }
 
     /* ---------------------------
-       Parallax: hero background
+       Parallax background
        --------------------------- */
     .hero-bg {
       position: absolute;
@@ -113,8 +107,7 @@
     }
 
     .scroll-smooth { scroll-behavior: smooth; }
-
-    /* Accessibility */
+  
     :focus { outline: none; }
     :focus-visible { outline: 3px solid rgba(255,215,0,0.25); outline-offset: 3px; }
   </style>
