@@ -29,14 +29,14 @@
   }
 
   /* Vlog card hover: fade + lift + gold pulse */
-  .vlog-card {
+  .vlog-card, .button-levitate {
     opacity: 0.9; 
     transform: translateY(0) scale(1);
     transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), 
                 opacity 0.35s cubic-bezier(0.4,0,0.2,1),
                 box-shadow 0.35s ease;
   }
-  .vlog-card:hover {
+  .vlog-card:hover, .button-levitate:hover {
     transform: translateY(-10px) scale(1.03);
     opacity: 1;
     animation: pulseGlow 1.2s infinite alternate;
@@ -59,7 +59,7 @@
     <div class="text-center md:text-left">
       <h1 class="text-5xl md:text-6xl font-bold text-white drop-shadow-lg anim-hidden">LuckyMommy</h1>
       <p class="text-lg mt-3 text-gray-200 anim-hidden">Jennifer Reyes Sing — Casino Vlogs, Wins & Lifestyle</p>
-      <a href="https://www.youtube.com/@YourChannelName" target="_blank" class="mt-6 inline-block bg-red-700 text-white font-semibold py-2 px-6 rounded-full hover-golden-pulse transition anim-hidden">Watch My Vlogs</a>
+      <a href="https://www.youtube.com/@YourChannelName" target="_blank" class="mt-6 inline-block bg-red-700 text-white font-semibold py-2 px-6 rounded-full hover-golden-pulse transition anim-hidden button-levitate">Watch My Vlogs</a>
     </div>
   </div>
 </header>
@@ -136,7 +136,7 @@
           const img = entry.target.querySelector('img');
           const txt = entry.target.querySelector('div');
           img.classList.add('anim-fadeLeft'); img.style.opacity=1;
-          txt.classList.add('anim-fadeRight'); txt.style.opacity=1;
+          txt.classList.add('anim-fadeRight'); txt.style.opacity=1; // ensures text shows
         } else { // footer
           entry.target.classList.add('anim-fadeUp'); entry.target.style.opacity=1;
         }
