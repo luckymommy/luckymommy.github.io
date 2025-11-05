@@ -1,126 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LuckyMommy Vlog | Jennifer Reyes Sing</title>
-<meta name="description" content="LuckyMommy — Jennifer Reyes Sing: casino vlogs, big wins, and lifestyle content." />
-<meta property="og:title" content="LuckyMommy Vlog | Jennifer Reyes Sing">
-<meta property="og:description" content="Casino vlogs, wins, and lifestyle content by LuckyMommy.">
-<meta property="og:image" content="images/hero-bg.jpg">
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-<!-- GSAP for advanced scroll-driven animations -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-
-<style>
-  /* ---------- Keyframes ---------- */
-  @keyframes fadeUp { 0% {opacity:0; transform:translateY(30px);} 100% {opacity:1; transform:translateY(0);} }
-  @keyframes fadeLeft { 0% {opacity:0; transform:translateX(-30px);} 100% {opacity:1; transform:translateX(0);} }
-  @keyframes fadeRight { 0% {opacity:0; transform:translateX(30px);} 100% {opacity:1; transform:translateX(0);} }
-  @keyframes pulseGlow { 0% {box-shadow:0 0 14px rgba(255,215,0,0.25);} 50% {box-shadow:0 0 30px rgba(255,215,0,0.45);} 100% {box-shadow:0 0 14px rgba(255,215,0,0.25);} }
-  @keyframes scrollText { 0% {transform: translateX(0%);} 100% {transform: translateX(-50%);} }
-
-  /* ---------- Animations ---------- */
-  .anim-hidden { opacity:0; transform:translateY(20px); }
-  .anim-fadeUp { animation: fadeUp 0.9s ease forwards; }
-  .anim-fadeLeft { animation: fadeLeft 1s ease forwards; }
-  .anim-fadeRight { animation: fadeRight 1s ease forwards; }
-
-  /* ---------- Hover Effects ---------- */
-  .hover-golden-pulse { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-  .hover-golden-pulse:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(255,215,0,0.45); }
-
-  /* Watch button levitate */
-  .button-levitate { opacity: 0.9; transform: translateY(0) scale(1); transition: transform 0.35s ease, box-shadow 0.35s ease; }
-  .button-levitate:hover { transform: translateY(-10px) scale(1.03); box-shadow: 0 0 25px rgba(255,215,0,0.45); }
-
-  /* Vlog card hover: fade + lift + gold pulse */
-  .vlog-card { opacity: 0.9; transform: translateY(0) scale(1); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s cubic-bezier(0.4,0,0.2,1), box-shadow 0.35s ease; }
-  .vlog-card:hover { transform: translateY(-10px) scale(1.03); opacity: 1; animation: pulseGlow 1.2s 1; }
-
-  /* Scrolling text inside cards */
-  .scrolling-text { display:inline-block; white-space:nowrap; overflow:hidden; }
-  .vlog-card:hover .scrolling-text { animation: scrollText 6s linear infinite; }
-
-  .scroll-smooth { scroll-behavior:smooth; }
-
-  a:focus-visible { outline: 3px solid rgba(250,205,21,0.9); outline-offset: 3px; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .anim-fadeUp, .anim-fadeLeft, .anim-fadeRight, .vlog-card:hover .scrolling-text { animation: none !important; transition: none !important; }
-  }
-
-  .no-js .anim-hidden { opacity:1; transform:none; }
-
-  /* ---------- Showcase (cylindrical ring) styles ---------- */
-  #showcase { position: relative; height: 100vh; min-height: 640px; display: flex; align-items: center; justify-content: center; overflow: hidden; background-image: url('images/pillar-bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; }
-  .showcase-stage { position: absolute; inset:0; display:flex; align-items:center; justify-content:center; perspective:1400px; }
-
-  /* pillar (image centered) */
-  .pillar { position: absolute; left:50%; top:50%; transform: translate(-50%,-50%) rotateY(6deg); width: 360px; height: 86%; border-radius: 40px; object-fit: cover; z-index:40; pointer-events: none; }
-  /* remove bottom preview — no spiral-row */
-
-  /* cylinder ring items (in front of pillar) */
-  .cylinder-wrap { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; z-index:60; pointer-events:none; }
-  .cyl-item { position: absolute; left:50%; top:50%; width: 320px; height: 180px; margin-left:-160px; margin-top:-90px; border-radius:14px; overflow:hidden; background:#fff; box-shadow:0 18px 50px rgba(0,0,0,0.55); transform-origin:center center; will-change: transform, opacity; pointer-events:auto; }
-  .cyl-item img { width:100%; height:100%; object-fit:cover; display:block; }
-
-  /* golden tint when front */
-  .cyl-item.front::after { content:""; position:absolute; inset:0; pointer-events:none; background: linear-gradient(180deg, rgba(255,244,215,0.22), rgba(255,210,120,0.12)); mix-blend-mode: screen; opacity: 1; border-radius:inherit; }
-
-  /* final row (not used) */
-  .hidden { display:none !important; }
-
-  /* Responsive adjustments */
-  @media (max-width: 1024px) {
-    .cyl-item { width: 260px; height:156px; margin-left:-130px; margin-top:-78px; }
-    .pillar { width: 300px; }
-  }
-  @media (max-width: 768px) {
-    .cyl-item { width: 200px; height:120px; margin-left:-100px; margin-top:-60px; }
-    .pillar { width: 240px; }
-  }
-
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LuckyMommy Vlog | Jennifer Reyes Sing</title>
+  <meta name="description" content="LuckyMommy — Jennifer Reyes Sing: casino vlogs, big wins, and lifestyle content." />
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 </head>
 <body class="bg-black text-gray-100 font-sans scroll-smooth">
 <script>document.documentElement.classList.remove('no-js');</script>
 
-<!-- HERO SECTION -->
+<!-- HERO -->
 <header class="relative h-screen flex items-center justify-center text-center overflow-hidden">
   <img src="images/hero-bg.jpg" alt="Casino background" class="absolute inset-0 w-full h-full object-cover opacity-30">
-  <div id="heroCard" class="relative z-10 flex flex-col md:flex-row items-center gap-8 bg-white/20 p-8 rounded-3xl backdrop-blur-md shadow-2xl">
-    <img src="images/profile.jpg" alt="LuckyMommy Profile" class="w-40 h-40 rounded-full object-cover border-4 border-red-800 shadow-lg anim-hidden">
+  <div id="heroCard" class="relative z-10 flex flex-col md:flex-row items-center gap-8 bg-white/20 p-8 rounded-3xl backdrop-blur-md shadow-2xl anim-hidden">
+    <img src="images/profile.jpg" alt="LuckyMommy Profile" class="w-40 h-40 rounded-full object-cover border-4 border-red-800 shadow-lg">
     <div class="text-center md:text-left">
-      <h1 class="text-5xl md:text-6xl font-bold text-white drop-shadow-lg anim-hidden">LuckyMommy</h1>
-      <p class="text-lg mt-3 text-gray-200 anim-hidden">Jennifer Reyes Sing — Casino Vlogs, Wins & Lifestyle</p>
-      <a href="https://www.youtube.com/@Luckymommy2.0" target="_blank" rel="noopener noreferrer" aria-label="Watch LuckyMommy vlogs on YouTube (opens in new tab)" class="mt-6 inline-block bg-red-700 text-white font-semibold py-2 px-6 rounded-full hover-golden-pulse transition anim-hidden button-levitate">Watch My Vlogs</a>
+      <h1 class="text-5xl md:text-6xl font-bold text-white drop-shadow-lg">LuckyMommy</h1>
+      <p class="text-lg mt-3 text-gray-200">Jennifer Reyes Sing — Casino Vlogs, Wins & Lifestyle</p>
+      <a href="https://www.youtube.com/@Luckymommy2.0" target="_blank" rel="noopener noreferrer" class="mt-6 inline-block bg-red-700 text-white font-semibold py-2 px-6 rounded-full hover-golden-pulse button-levitate">Watch My Vlogs</a>
     </div>
   </div>
 </header>
 
-<!-- ABOUT SECTION (kept intact) -->
+<!-- ABOUT -->
 <section id="about" class="py-16 px-6 bg-red-900 text-white">
   <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-    <img src="images/about-photo.jpg" alt="Jennifer Reyes Sing smiling in casino" loading="lazy" class="rounded-2xl shadow-2xl object-cover w-full h-80 anim-hidden">
-    <div class="anim-hidden" id="aboutText">
+    <img src="images/about-photo.jpg" alt="Jennifer smiling" class="rounded-2xl shadow-2xl object-cover w-full h-80 anim-hidden">
+    <div id="aboutText" class="anim-hidden">
       <h2 class="text-3xl font-bold text-yellow-100 mb-4">About LuckyMommy</h2>
-      <p class="text-gray-200 leading-relaxed">Hi! I’m <span class="text-yellow-300 font-semibold">Jennifer Reyes Sing</span>, also known online as <span class="italic">LuckyMommy</span>. I share my casino adventures, gaming experiences, and lifestyle moments — showing both the fun and the strategy behind the games I love.</p>
-      <p class="text-gray-300 mt-4">This vlog is all about confidence, timing, and a bit of luck. 🎲 Join me in every spin, bet, and win — and let’s enjoy the thrill together!</p>
+      <p class="text-gray-200 leading-relaxed">Hi! I’m <span class="text-yellow-300 font-semibold">Jennifer Reyes Sing</span>, also known as <span class="italic">LuckyMommy</span>. I share casino adventures, gaming experiences, and lifestyle moments — showing the fun and strategy behind the games I love.</p>
+      <p class="text-gray-300 mt-4">This vlog is all about confidence, timing, and a bit of luck. 🎲 Join me in every spin, bet, and win!</p>
     </div>
   </div>
 </section>
 
-<!-- SHOWCASE (cylindrical ring around pillar) -->
+<!-- SHOWCASE -->
 <section id="showcase" class="bg-black text-white">
   <div class="showcase-stage">
-    <img src="images/pillar.jpg" alt="pillar" class="pillar" id="pillarImg" aria-hidden="true">
+    <img src="images/pillar.jpg" alt="pillar" class="pillar" aria-hidden="true">
     <div class="cylinder-wrap" id="cylinderWrap" aria-hidden="false"></div>
   </div>
 </section>
 
-<!-- VLOG SECTION -->
+<!-- VLOGS -->
 <section id="vlogs" class="py-16 px-6 bg-black text-white opacity-0">
   <div class="max-w-6xl mx-auto text-center mb-10">
     <h2 class="text-3xl font-bold text-white anim-hidden">🎥 Latest Vlogs</h2>
@@ -135,252 +60,6 @@
   <p class="text-sm mt-2">Follow me on YouTube and Facebook for more casino adventures 🎲</p>
 </footer>
 
-<script>
-/* ---------------------------
-   Data: vlog list (same thumbnails used everywhere)
-   --------------------------- */
-const vlogs = [
-  {title:"Triple Bonus!!!",desc:"Triple Bonus!!!",thumb:"images/thumbnail1.jpg",link:"https://www.youtube.com/watch?v=N_C93F3fwm0"},
-  {title:"Buccaneers vs Dollar Bommer bonus…",desc:"Buccaneers vs Dollar Bommer bonus… which one is worse?! 🤔",thumb:"images/thumbnail2.jpg",link:"https://www.youtube.com/watch?v=XdD_x34WY54"},
-  {title:"Triple Pop Bonus Bao Zhu Zhao Fu!",desc:"Triple Pop Bonus Bao Zhu Zhao Fu!",thumb:"images/thumbnail3.jpg",link:"https://www.youtube.com/watch?v=N-Z8QlAtPbQ"},
-  {title:"Chica Bonita give me a big score…",desc:"Thank You!",thumb:"images/thumbnail4.jpg",link:"https://www.youtube.com/watch?v=jV3LxDzX85w"},
-  {title:"Let’s try this new game…😎",desc:"Let’s try this new game…😎",thumb:"images/thumbnail5.jpg",link:"https://www.youtube.com/watch?v=1vH8J2qxKkE"},
-  {title:"Monday Free Play…",desc:"Triple pop, watch till the end for the total profit $$$",thumb:"images/thumbnail6.jpg",link:"https://www.youtube.com/watch?v=cTe2WUe12fU"},
-  {title:"Dollar Storm Buccaneers",desc:"Dollar Storm Buccaneers",thumb:"images/thumbnail7.jpg",link:"https://www.youtube.com/watch?v=OF9CZXez7Hs"},
-  {title:"I got spooked so I decided to play dollar storm…and it didn’t disappoint me😎",desc:"none",thumb:"images/thumbnail8.jpg",link:"https://www.youtube.com/watch?v=rgKfbr2x-RI"},
-  {title:"Friday Free Play",desc:"@ Dollar Storm…Watch how much profit I get at the end..😎",thumb:"images/thumbnail9.jpg",link:"https://www.youtube.com/watch?v=GQlJqbWIe4A"},
-  {title:"Bonus on all 3!!! IS THIS MACHINE BROKEN??!?!",desc:"#subscribe",thumb:"images/thumbnail10.jpg",link:"https://www.youtube.com/watch?v=bZL3cCIXaG4"}
-];
-
-/* ---------------------------
-   Build the cylinder items (3 visible at a time)
-   --------------------------- */
-const cylinderWrap = document.getElementById('cylinderWrap');
-const items = [];
-vlogs.forEach((v,i)=>{
-  const el = document.createElement('a'); // make thumbnails clickable
-  el.href = v.link;
-  el.target = "_blank";
-  el.rel = "noopener noreferrer";
-  el.className = 'cyl-item';
-  el.innerHTML = `<img src="${v.thumb}" alt="${v.title}" loading="lazy">`;
-  cylinderWrap.appendChild(el);
-  items.push(el);
-});
-
-/* ---------------------------
-   Keep vlog cards and footer logic intact
-   --------------------------- */
-const vlogContainer = document.getElementById('vlogContainer');
-const yearSpan = document.getElementById('year');
-yearSpan.textContent = new Date().getFullYear();
-
-vlogs.forEach(v=>{
-  const card = document.createElement('a');
-  card.href = v.link.trim();
-  card.target = "_blank";
-  card.rel = "noopener noreferrer";
-  card.className = "vlog-card inline-block bg-white text-gray-900 rounded-xl shadow-md overflow-hidden w-72 focus-visible:ring-2 focus-visible:ring-yellow-300";
-  card.innerHTML = `
-    <img src="${v.thumb}" alt="Thumbnail for ${v.title}" loading="lazy" class="w-full h-44 object-cover">
-    <div class="p-4">
-      <h3 class="font-semibold text-lg text-red-800">${v.title}</h3>
-      <p class="scrolling-text text-gray-600 text-sm mt-1">${v.desc}</p>
-    </div>
-  `;
-  vlogContainer.appendChild(card);
-});
-
-/* ---------------------------
-   IntersectionObserver for original fade in sections (preserved)
-   --------------------------- */
-const observer = new IntersectionObserver((entries, obs)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      if(entry.target.tagName==="HEADER"){
-        entry.target.querySelectorAll('.anim-hidden').forEach((el,i)=>{
-          setTimeout(()=>{ el.classList.add('anim-fadeUp'); el.style.opacity=1; }, i*200);
-        });
-      } else if(entry.target.id==="about"){
-        const img = entry.target.querySelector('img');
-        const txt = entry.target.querySelector('#aboutText');
-        img.classList.add('anim-fadeLeft'); img.style.opacity=1;
-        txt.classList.add('anim-fadeRight'); txt.style.opacity=1;
-      } else if(entry.target.id==="vlogs"){
-        entry.target.querySelectorAll('h2, p').forEach(el=>{ el.classList.add('anim-fadeUp'); el.style.opacity=1; });
-      } else {
-        entry.target.classList.add('anim-fadeUp'); entry.target.style.opacity=1;
-      }
-      obs.unobserve(entry.target);
-    }
-  });
-}, {threshold:0.2});
-document.querySelectorAll('header, #about, #vlogs, footer').forEach(el=>observer.observe(el));
-
-/* ---------------------------
-   GSAP: cylinder rotation (3 visible at a time), outward-facing, tilt perspective
-   - behavior: scroll drives a single pass (plays once while pinned). scrolling back reverses.
-   - thumbnails fade in from right, pass front, fade out left.
-   --------------------------- */
-if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && window.gsap && window.ScrollTrigger) {
-  gsap.registerPlugin(ScrollTrigger);
-
-  const total = items.length;
-  const visibleCount = 3; // show 3 at a time
-  const radius = Math.min(window.innerWidth, 1200) * 0.25; // ring radius
-  const tiltDeg = 15; // slight camera tilt angle in degrees (visual only)
-  const driver = { pos: 0 }; // drives center index (0..total)
-
-  // helper: compute visible indices centered around centerIndex
-  function visibleIndices(centerIndex) {
-    const half = Math.floor(visibleCount/2);
-    const indices = [];
-    for (let i = -half; i <= half; i++) {
-      indices.push((centerIndex + i + total) % total);
-    }
-    return indices;
-  }
-
-  // Reset state
-  items.forEach(it => {
-    gsap.set(it, { autoAlpha: 0, scale: 0.9, rotationY: 0 });
-  });
-
-  // Timeline pinned to showcase
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '#showcase',
-      start: 'top top',
-      end: '+=900', // how long the scrubbed section lasts (adjust as needed)
-      scrub: 0.6,
-      pin: true,
-      anticipatePin: 1,
-      onUpdate: self => { /* optional */ }
-    }
-  });
-
-  // drive pos from 0 to total-1 gradually
-  tl.to(driver, {
-    pos: total - 1,
-    duration: 2.0,
-    ease: 'none',
-    onUpdate: () => {
-      const t = driver.pos; // e.g. 0..(total-1)
-      const center = Math.floor(t) % total;
-      const progress = t - Math.floor(t); // fractional progress between centers
-
-      const indices = visibleIndices(center);
-
-      // mark all hidden, then position visible ones
-      items.forEach(it => {
-        gsap.set(it, { autoAlpha: 0, visibility: 'hidden' });
-        it.classList.remove('front');
-      });
-
-      // For the visible positions (left, center, right), assign angles across ~180deg arc in front
-      // We'll map positions -1,0,1 -> angles from +60deg (right) -> 0 (front) -> -60deg (left) (in radians)
-      const angleSpread = (Math.PI * 2) * 0.5; // use half-circle for motion
-      const maxAngle = Math.PI * 0.6; // about 108deg total spread
-      const perPosAngle = maxAngle / (visibleCount - 1);
-
-      indices.forEach((idx, pos) => {
-        const posIndex = pos; // 0..visibleCount-1
-        const centeredPos = posIndex - (visibleCount - 1)/2; // -1,0,1 for visibleCount=3
-        // base angle in radians, positive = right side, negative = left side
-        const baseAngle = -centeredPos * perPosAngle; // e.g. right->positive, left->negative (invert if needed)
-
-        // add a small rotation based on progress so items gently move across
-        const angle = baseAngle + progress * (-0.12); // tweak for slight motion
-
-        // convert to full angle around ring (we want these front arcs, but keep full ring layout so that items come from right)
-        // We compute a globalAngle for item i so that as center increases, items shift along ring.
-        // Global angular offset for item center: center * (360 / total)
-        const globalOffsetDeg = ((center + progress) * (360 / total));
-        // compute item's own offset along ring so spacing remains even around ring:
-        const itemSpacingDeg = 360 / total;
-        const itemAngleDeg = ((idx * itemSpacingDeg) - globalOffsetDeg) ; // degrees
-        const itemAngle = (itemAngleDeg) * Math.PI / 180;
-
-        // Position in 3D ring
-        const x = Math.cos(itemAngle) * radius;
-        const z = Math.sin(itemAngle) * radius * 0.9; // compress a bit for nicer perspective
-        // Slight vertical tilt so it looks slightly rotated camera-wise
-        const y = Math.sin(itemAngle * 0.5) * (radius * 0.04);
-
-        // determine visibility: near-front if cosine of itemAngle is > threshold (front hemisphere)
-        const frontThreshold = Math.cos(Math.PI * 0.55); // ~ -0.0.. gives front arc
-        const isFront = Math.cos(itemAngle) > frontThreshold;
-
-        if (isFront) {
-          // show it
-          gsap.set(items[idx], { autoAlpha: 1, visibility: 'visible' });
-          // outward-facing rotation: we want each thumbnail to face away from pillar center (normal)
-          // outward rotation = angleDeg + 90 (so image looks outward)
-          const rotationY = (itemAngleDeg + 90);
-          // scale based on how close to center front (front-most should be largest)
-          // closeness measure: cos of angle (1 = directly front, 0 = side, -1 = back)
-          const closeness = Math.max(0, Math.cos(itemAngle));
-          const scale = 0.95 + (closeness * 0.25);
-
-          // apply transforms
-          gsap.set(items[idx], {
-            x: x,
-            y: y,
-            z: z,
-            rotationY: rotationY,
-            scale: scale,
-            transformPerspective: 1400,
-            force3D: true,
-            autoAlpha: 1
-          });
-
-          // mark very-front item as .front to enable the gold tint
-          if (closeness > 0.9) items[idx].classList.add('front');
-          else items[idx].classList.remove('front');
-
-          // fade in/out smoothly based on angle: nearer front => opaque
-          const opacity = 0.35 + (closeness * 0.9);
-          items[idx].style.opacity = opacity;
-
-        } else {
-          // hide (back side)
-          gsap.set(items[idx], { autoAlpha: 0, visibility: 'hidden' });
-          items[idx].classList.remove('front');
-        }
-      });
-
-    }
-  }, 0.1);
-
-  // After the pass, collapse quickly (snappy) and reveal vlogs
-  tl.to({}, { duration: 0.2 }); // brief hold
-  tl.call(() => {
-    // quick fade out the showcase and reveal vlogs (snappy)
-    gsap.to('#showcase', { autoAlpha: 0, duration: 0.25, ease: 'power1.in' });
-    gsap.to('#vlogs', { autoAlpha: 1, duration: 0.25, ease: 'power1.out' });
-  });
-
-  // When scrolling back up: ensure showcase visible again
-  ScrollTrigger.create({
-    trigger: '#showcase',
-    start: 'top top',
-    onEnterBack: () => {
-      gsap.to('#showcase', { autoAlpha: 1, duration: 0.18 });
-      gsap.to('#vlogs', { autoAlpha: 0, duration: 0.18 });
-    }
-  });
-
-  // resize handling: recompute radius on resize
-  window.addEventListener('resize', () => {
-    // new radius in px
-    // (we keep same variable but timeline computes positions dynamically each update)
-  });
-
-} else {
-  // fallback: show vlogs if no GSAP or reduced motion
-  document.getElementById('vlogs').style.opacity = 1;
-  items.forEach(it => { it.style.opacity = 1; it.style.visibility = 'visible'; });
-}
-</script>
+<script src="main.js"></script>
 </body>
 </html>
