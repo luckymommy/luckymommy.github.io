@@ -12,6 +12,7 @@
 <!-- GSAP for advanced scroll-driven animations -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
 <style>
   /* ---------- Keyframes ---------- */
   @keyframes fadeUp { 0% {opacity:0; transform:translateY(30px);} 100% {opacity:1; transform:translateY(0);} }
@@ -52,19 +53,34 @@
 
   .no-js .anim-hidden { opacity:1; transform:none; }
 
-  /* ---------- Showcase (spiral) styles ---------- */
-  #showcase { position: relative; height: 100vh; min-height: 640px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-  .showcase-stage { position: absolute; inset:0; display:flex; align-items:center; justify-content:center; perspective:1200px; }
-  .spiral-wrap { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
-  .spiral-item { position: absolute; left:50%; top:50%; width: 160px; height: 96px; margin-left:-80px; margin-top:-48px; border-radius: 12px; overflow:hidden; background:#fff; box-shadow:0 8px 30px rgba(0,0,0,0.45); transform-origin: center center; will-change: transform, opacity; }
-  .spiral-item img { width:100%; height:100%; object-fit:cover; display:block; }
+  /* ---------- Showcase (cylindrical ring) styles ---------- */
+  #showcase { position: relative; height: 100vh; min-height: 640px; display: flex; align-items: center; justify-content: center; overflow: hidden; background-image: url('images/pillar-bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; }
+  .showcase-stage { position: absolute; inset:0; display:flex; align-items:center; justify-content:center; perspective:1400px; }
 
-  /* Final align row inside showcase */
-  .spiral-row { position: absolute; bottom: 10%; left:50%; transform:translateX(-50%); display:flex; gap:1rem; align-items:center; justify-content:center; opacity:0; }
-  .spiral-row .mini { width:120px; height:72px; border-radius:8px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,0.35); }
+  /* pillar (image centered) */
+  .pillar { position: absolute; left:50%; top:50%; transform: translate(-50%,-50%) rotateY(6deg); width: 360px; height: 86%; border-radius: 40px; object-fit: cover; z-index:40; pointer-events: none; }
+  /* remove bottom preview — no spiral-row */
+
+  /* cylinder ring items (in front of pillar) */
+  .cylinder-wrap { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; z-index:60; pointer-events:none; }
+  .cyl-item { position: absolute; left:50%; top:50%; width: 320px; height: 180px; margin-left:-160px; margin-top:-90px; border-radius:14px; overflow:hidden; background:#fff; box-shadow:0 18px 50px rgba(0,0,0,0.55); transform-origin:center center; will-change: transform, opacity; pointer-events:auto; }
+  .cyl-item img { width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* golden tint when front */
+  .cyl-item.front::after { content:""; position:absolute; inset:0; pointer-events:none; background: linear-gradient(180deg, rgba(255,244,215,0.22), rgba(255,210,120,0.12)); mix-blend-mode: screen; opacity: 1; border-radius:inherit; }
+
+  /* final row (not used) */
+  .hidden { display:none !important; }
 
   /* Responsive adjustments */
-  @media (max-width: 768px){ .spiral-item{ width:120px; height:72px; margin-left:-60px; margin-top:-36px; } .spiral-row .mini{ width:90px; height:54px; } }
+  @media (max-width: 1024px) {
+    .cyl-item { width: 260px; height:156px; margin-left:-130px; margin-top:-78px; }
+    .pillar { width: 300px; }
+  }
+  @media (max-width: 768px) {
+    .cyl-item { width: 200px; height:120px; margin-left:-100px; margin-top:-60px; }
+    .pillar { width: 240px; }
+  }
 
 </style>
 </head>
@@ -84,7 +100,7 @@
   </div>
 </header>
 
-<!-- ABOUT SECTION (unchanged as requested) -->
+<!-- ABOUT SECTION (kept intact) -->
 <section id="about" class="py-16 px-6 bg-red-900 text-white">
   <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
     <img src="images/about-photo.jpg" alt="Jennifer Reyes Sing smiling in casino" loading="lazy" class="rounded-2xl shadow-2xl object-cover w-full h-80 anim-hidden">
@@ -96,19 +112,19 @@
   </div>
 </section>
 
-<!-- SHOWCASE (NEW) -->
+<!-- SHOWCASE (cylindrical ring around pillar) -->
 <section id="showcase" class="bg-black text-white">
   <div class="showcase-stage">
-    <div class="spiral-wrap" id="spiralWrap"></div>
-    <div class="spiral-row" id="spiralRow"></div>
+    <img src="images/pillar.jpg" alt="pillar" class="pillar" id="pillarImg" aria-hidden="true">
+    <div class="cylinder-wrap" id="cylinderWrap" aria-hidden="false"></div>
   </div>
 </section>
 
-<!-- VLOG SECTION (cards appear after showcase) -->
-<section id="vlogs" class="py-16 px-6 bg-black text-white overflow-x-auto whitespace-nowrap">
+<!-- VLOG SECTION -->
+<section id="vlogs" class="py-16 px-6 bg-black text-white opacity-0">
   <div class="max-w-6xl mx-auto text-center mb-10">
     <h2 class="text-3xl font-bold text-white anim-hidden">🎥 Latest Vlogs</h2>
-    <p class="text-gray-400 mt-2 anim-hidden">Scroll right and click a video to watch directly on YouTube!</p>
+    <p class="text-gray-400 mt-2 anim-hidden">Click a video thumbnail to watch on YouTube.</p>
   </div>
   <div class="flex space-x-6 px-4 pb-6 w-max mx-auto" id="vlogContainer"></div>
 </section>
@@ -120,9 +136,9 @@
 </footer>
 
 <script>
-// -------------------------------
-// Data: same vlog array used for cards and showcase
-// -------------------------------
+/* ---------------------------
+   Data: vlog list (same thumbnails used everywhere)
+   --------------------------- */
 const vlogs = [
   {title:"Triple Bonus!!!",desc:"Triple Bonus!!!",thumb:"images/thumbnail1.jpg",link:"https://www.youtube.com/watch?v=N_C93F3fwm0"},
   {title:"Buccaneers vs Dollar Bommer bonus…",desc:"Buccaneers vs Dollar Bommer bonus… which one is worse?! 🤔",thumb:"images/thumbnail2.jpg",link:"https://www.youtube.com/watch?v=XdD_x34WY54"},
@@ -136,29 +152,25 @@ const vlogs = [
   {title:"Bonus on all 3!!! IS THIS MACHINE BROKEN??!?!",desc:"#subscribe",thumb:"images/thumbnail10.jpg",link:"https://www.youtube.com/watch?v=bZL3cCIXaG4"}
 ];
 
-// -------------------------------
-// Generate spiral items (absolute positioned)
-// -------------------------------
-const spiralWrap = document.getElementById('spiralWrap');
-const spiralRow = document.getElementById('spiralRow');
+/* ---------------------------
+   Build the cylinder items (3 visible at a time)
+   --------------------------- */
+const cylinderWrap = document.getElementById('cylinderWrap');
 const items = [];
-
-vlogs.forEach((v, i) => {
-  const el = document.createElement('div');
-  el.className = 'spiral-item';
+vlogs.forEach((v,i)=>{
+  const el = document.createElement('a'); // make thumbnails clickable
+  el.href = v.link;
+  el.target = "_blank";
+  el.rel = "noopener noreferrer";
+  el.className = 'cyl-item';
   el.innerHTML = `<img src="${v.thumb}" alt="${v.title}" loading="lazy">`;
-  spiralWrap.appendChild(el);
+  cylinderWrap.appendChild(el);
   items.push(el);
-  // also create mini placeholders for final row
-  const mini = document.createElement('div');
-  mini.className = 'mini';
-  mini.innerHTML = `<img src="${v.thumb}" alt="${v.title}" loading="lazy" style="width:100%;height:100%;object-fit:cover">`;
-  spiralRow.appendChild(mini);
 });
 
-// -------------------------------
-// Keep original vlog card generation (unchanged behavior)
-// -------------------------------
+/* ---------------------------
+   Keep vlog cards and footer logic intact
+   --------------------------- */
 const vlogContainer = document.getElementById('vlogContainer');
 const yearSpan = document.getElementById('year');
 yearSpan.textContent = new Date().getFullYear();
@@ -176,12 +188,12 @@ vlogs.forEach(v=>{
       <p class="scrolling-text text-gray-600 text-sm mt-1">${v.desc}</p>
     </div>
   `;
-  vlogContainer?.appendChild(card);
+  vlogContainer.appendChild(card);
 });
 
-// -------------------------------
-// IntersectionObserver for fade-in animations (once) — preserved
-// -------------------------------
+/* ---------------------------
+   IntersectionObserver for original fade in sections (preserved)
+   --------------------------- */
 const observer = new IntersectionObserver((entries, obs)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
@@ -203,122 +215,172 @@ const observer = new IntersectionObserver((entries, obs)=>{
     }
   });
 }, {threshold:0.2});
-
 document.querySelectorAll('header, #about, #vlogs, footer').forEach(el=>observer.observe(el));
 
-// -------------------------------
-// GSAP Spiral Timeline (scroll-driven)
-// -------------------------------
+/* ---------------------------
+   GSAP: cylinder rotation (3 visible at a time), outward-facing, tilt perspective
+   - behavior: scroll drives a single pass (plays once while pinned). scrolling back reverses.
+   - thumbnails fade in from right, pass front, fade out left.
+   --------------------------- */
 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
 
-  // initial settings - hide spiral-row
-  gsap.set(spiralRow, { autoAlpha: 0 });
-  items.forEach(it => gsap.set(it, { x: 0, y: 0, z: 0, rotationY: 0, opacity: 0, scale: 0.8 }));
-
   const total = items.length;
-  const baseR = Math.min(window.innerWidth, 900) * 0.15; // base radius
-  const radStep = 18; // radius growth per item
-  const angleStep = (Math.PI * 2) / total;
+  const visibleCount = 3; // show 3 at a time
+  const radius = Math.min(window.innerWidth, 1200) * 0.25; // ring radius
+  const tiltDeg = 15; // slight camera tilt angle in degrees (visual only)
+  const driver = { pos: 0 }; // drives center index (0..total)
 
-  // dummy object to drive the spiral progress
-  const driver = { t: 0 };
+  // helper: compute visible indices centered around centerIndex
+  function visibleIndices(centerIndex) {
+    const half = Math.floor(visibleCount/2);
+    const indices = [];
+    for (let i = -half; i <= half; i++) {
+      indices.push((centerIndex + i + total) % total);
+    }
+    return indices;
+  }
 
+  // Reset state
+  items.forEach(it => {
+    gsap.set(it, { autoAlpha: 0, scale: 0.9, rotationY: 0 });
+  });
+
+  // Timeline pinned to showcase
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: '#showcase',
       start: 'top top',
-      end: '+=1200', // strength of the scrubbed animation
+      end: '+=900', // how long the scrubbed section lasts (adjust as needed)
       scrub: 0.6,
       pin: true,
       anticipatePin: 1,
-      onUpdate: self => { /* left for debugging if needed */ },
+      onUpdate: self => { /* optional */ }
     }
   });
 
-  // Stage 1: items pop in
-  tl.to(items, {
-    duration: 0.6,
-    opacity: 1,
-    scale: 1,
-    stagger: 0.06,
-    ease: 'power2.out'
-  }, 0);
-
-  // Stage 2: spin driver from 0 -> 1 (controls spiral rotation)
+  // drive pos from 0 to total-1 gradually
   tl.to(driver, {
-    t: 1,
-    duration: 1.8,
+    pos: total - 1,
+    duration: 2.0,
     ease: 'none',
     onUpdate: () => {
-      const t = driver.t; // 0..1
-      const rotations = 3.5; // how many spiral rotations
-      items.forEach((el, i) => {
-        const angle = i * angleStep + t * rotations * Math.PI * 2;
-        const r = baseR + i * radStep;
-        const x = Math.cos(angle) * r;
-        const y = Math.sin(angle) * r * 0.45; // compress vertically
-        const z = Math.sin(angle * 0.9) * (80 + i * 4); // depth
-        const rotY = (t * 360) + i * 8;
-        gsap.set(el, { x, y, z, rotationY: rotY });
+      const t = driver.pos; // e.g. 0..(total-1)
+      const center = Math.floor(t) % total;
+      const progress = t - Math.floor(t); // fractional progress between centers
+
+      const indices = visibleIndices(center);
+
+      // mark all hidden, then position visible ones
+      items.forEach(it => {
+        gsap.set(it, { autoAlpha: 0, visibility: 'hidden' });
+        it.classList.remove('front');
       });
-    }
-  }, 0.2);
 
-  // Stage 3: tighten spiral and bring items to a row at bottom
-  tl.to(driver, { t: 1.05, duration: 0.6, ease: 'power2.inOut' }, 2.0);
+      // For the visible positions (left, center, right), assign angles across ~180deg arc in front
+      // We'll map positions -1,0,1 -> angles from +60deg (right) -> 0 (front) -> -60deg (left) (in radians)
+      const angleSpread = (Math.PI * 2) * 0.5; // use half-circle for motion
+      const maxAngle = Math.PI * 0.6; // about 108deg total spread
+      const perPosAngle = maxAngle / (visibleCount - 1);
 
-  // animate items to row positions (local coordinates)
-  tl.to(items, {
-    duration: 0.9,
-    ease: 'power2.inOut',
-    onStart: () => {
-      // fade in the spiral row as we start collapsing
-      gsap.to(spiralRow, { autoAlpha: 1, duration: 0.6, ease: 'power2.out' });
-    },
-    onUpdate: function() {
-      // map items into row positions progressively
-      const rowCenterX = window.innerWidth / 2;
-      const rowY = window.innerHeight * 0.75;
-      const spacing = 140;
-      items.forEach((el, i) => {
-        const idxCentered = i - (items.length - 1) / 2;
-        const tx = idxCentered * spacing;
-        const ty = rowY - window.innerHeight / 2; // relative to center of showcase
-        const tz = 0;
-        // linearly interpolate current transform to final
-        const progress = this.ratio; // 0..1
-        // get current transform matrix values? Instead directly set target based on progress
-        gsap.set(el, { x: tx, y: ty, z: tz, rotationY: 0, scale: 0.9 });
+      indices.forEach((idx, pos) => {
+        const posIndex = pos; // 0..visibleCount-1
+        const centeredPos = posIndex - (visibleCount - 1)/2; // -1,0,1 for visibleCount=3
+        // base angle in radians, positive = right side, negative = left side
+        const baseAngle = -centeredPos * perPosAngle; // e.g. right->positive, left->negative (invert if needed)
+
+        // add a small rotation based on progress so items gently move across
+        const angle = baseAngle + progress * (-0.12); // tweak for slight motion
+
+        // convert to full angle around ring (we want these front arcs, but keep full ring layout so that items come from right)
+        // We compute a globalAngle for item i so that as center increases, items shift along ring.
+        // Global angular offset for item center: center * (360 / total)
+        const globalOffsetDeg = ((center + progress) * (360 / total));
+        // compute item's own offset along ring so spacing remains even around ring:
+        const itemSpacingDeg = 360 / total;
+        const itemAngleDeg = ((idx * itemSpacingDeg) - globalOffsetDeg) ; // degrees
+        const itemAngle = (itemAngleDeg) * Math.PI / 180;
+
+        // Position in 3D ring
+        const x = Math.cos(itemAngle) * radius;
+        const z = Math.sin(itemAngle) * radius * 0.9; // compress a bit for nicer perspective
+        // Slight vertical tilt so it looks slightly rotated camera-wise
+        const y = Math.sin(itemAngle * 0.5) * (radius * 0.04);
+
+        // determine visibility: near-front if cosine of itemAngle is > threshold (front hemisphere)
+        const frontThreshold = Math.cos(Math.PI * 0.55); // ~ -0.0.. gives front arc
+        const isFront = Math.cos(itemAngle) > frontThreshold;
+
+        if (isFront) {
+          // show it
+          gsap.set(items[idx], { autoAlpha: 1, visibility: 'visible' });
+          // outward-facing rotation: we want each thumbnail to face away from pillar center (normal)
+          // outward rotation = angleDeg + 90 (so image looks outward)
+          const rotationY = (itemAngleDeg + 90);
+          // scale based on how close to center front (front-most should be largest)
+          // closeness measure: cos of angle (1 = directly front, 0 = side, -1 = back)
+          const closeness = Math.max(0, Math.cos(itemAngle));
+          const scale = 0.95 + (closeness * 0.25);
+
+          // apply transforms
+          gsap.set(items[idx], {
+            x: x,
+            y: y,
+            z: z,
+            rotationY: rotationY,
+            scale: scale,
+            transformPerspective: 1400,
+            force3D: true,
+            autoAlpha: 1
+          });
+
+          // mark very-front item as .front to enable the gold tint
+          if (closeness > 0.9) items[idx].classList.add('front');
+          else items[idx].classList.remove('front');
+
+          // fade in/out smoothly based on angle: nearer front => opaque
+          const opacity = 0.35 + (closeness * 0.9);
+          items[idx].style.opacity = opacity;
+
+        } else {
+          // hide (back side)
+          gsap.set(items[idx], { autoAlpha: 0, visibility: 'hidden' });
+          items[idx].classList.remove('front');
+        }
       });
+
     }
-  }, 2.6);
+  }, 0.1);
 
-  // Stage 4: finalize row, then unpin and allow normal scroll
-  tl.to({}, { duration: 0.4 });
+  // After the pass, collapse quickly (snappy) and reveal vlogs
+  tl.to({}, { duration: 0.2 }); // brief hold
+  tl.call(() => {
+    // quick fade out the showcase and reveal vlogs (snappy)
+    gsap.to('#showcase', { autoAlpha: 0, duration: 0.25, ease: 'power1.in' });
+    gsap.to('#vlogs', { autoAlpha: 1, duration: 0.25, ease: 'power1.out' });
+  });
 
-  // When the timeline completes its scrubbed progress near the end, release and let vlog cards be visible
+  // When scrolling back up: ensure showcase visible again
   ScrollTrigger.create({
     trigger: '#showcase',
-    start: 'bottom bottom-=1',
-    onEnter: () => {
-      // ensure spiralRow visible
-      gsap.to(spiralRow, { autoAlpha: 1, duration: 0.4 });
-      // reveal vlog cards (they are below) — fade in
-      gsap.to('#vlogs', { autoAlpha: 1, duration: 0.6, delay: 0.2 });
+    start: 'top top',
+    onEnterBack: () => {
+      gsap.to('#showcase', { autoAlpha: 1, duration: 0.18 });
+      gsap.to('#vlogs', { autoAlpha: 0, duration: 0.18 });
     }
   });
 
-  // Make sure when Resize happens we update baseR
+  // resize handling: recompute radius on resize
   window.addEventListener('resize', () => {
-    // no-op for now; could recalc values if needed
+    // new radius in px
+    // (we keep same variable but timeline computes positions dynamically each update)
   });
 
 } else {
-  // Reduced motion or GSAP missing: fallback — reveal spiralRow and allow normal scroll
-  gsap && gsap.set && gsap.set(spiralRow, { autoAlpha: 1 });
+  // fallback: show vlogs if no GSAP or reduced motion
+  document.getElementById('vlogs').style.opacity = 1;
+  items.forEach(it => { it.style.opacity = 1; it.style.visibility = 'visible'; });
 }
-
 </script>
 </body>
 </html>
