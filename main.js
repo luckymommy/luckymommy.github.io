@@ -12,17 +12,16 @@ const vlogs = [
   { title: "Bonus on all 3!!!", desc: "#subscribe", thumb: "images/thumbnail10.jpg", link: "https://www.youtube.com/watch?v=bZL3cCIXaG4" }
 ];
 
-// ------------------ DOM REFERENCES ------------------
+// ------------------ DOM References ------------------
 const cylinderWrap = document.getElementById("cylinderWrap");
 const vlogContainer = document.getElementById("vlogContainer");
 const yearSpan = document.getElementById("year");
-
 yearSpan.textContent = new Date().getFullYear();
 
 const items = [];
 
-// ------------------ BUILD CYLINDER ITEMS ------------------
-vlogs.forEach(v => {
+// ------------------ Build Cylinder Items ------------------
+vlogs.forEach((v) => {
   const el = document.createElement("a");
   el.href = v.link;
   el.target = "_blank";
@@ -33,17 +32,17 @@ vlogs.forEach(v => {
   items.push(el);
 });
 
-// ------------------ BUILD VLOG CARDS ------------------
-vlogs.forEach(v => {
+// ------------------ Build Vlog Cards ------------------
+vlogs.forEach((v) => {
   const card = document.createElement("a");
   card.href = v.link;
   card.target = "_blank";
   card.rel = "noopener noreferrer";
   card.className =
-    "vlog-card inline-block bg-white text-gray-900 rounded-xl shadow-md overflow-hidden w-72";
+    "vlog-card inline-block bg-white text-gray-900 rounded-xl shadow-md overflow-hidden w-64"; // smaller
 
   card.innerHTML = `
-    <img src="${v.thumb}" alt="${v.title}" loading="lazy" class="w-full h-44 object-cover">
+    <img src="${v.thumb}" alt="${v.title}" loading="lazy" class="w-full h-36 object-cover">
     <div class="p-4">
       <h3 class="font-semibold text-lg text-red-800">${v.title}</h3>
       <p class="scrolling-text text-gray-600 text-sm mt-1">${v.desc}</p>
@@ -52,16 +51,19 @@ vlogs.forEach(v => {
   vlogContainer.appendChild(card);
 });
 
-// ------------------ INTERSECTION ANIMATIONS ------------------
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
+// ------------------ Intersection Animations ------------------
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
     if (!entry.isIntersecting) return;
 
-    if (entry.target.tagName === "HEADER") {
-      entry.target.querySelectorAll(".anim-hidden").forEach((el, i) => {
+    const hiddenEls = entry.target.querySelectorAll(".anim-hidden");
+    if (hiddenEls.length) {
+      hiddenEls.forEach((el, i) => {
         setTimeout(() => {
-          el.classList.add("anim-fadeUp");
-          el.style.opacity = 1;
+          if (el.classList.contains("anim-hidden")) {
+            el.classList.add("anim-fadeUp");
+            el.style.opacity = 1;
+          }
         }, i * 150);
       });
     } else {
@@ -73,11 +75,11 @@ const observer = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.25 });
 
-document.querySelectorAll("header, #about, #vlogs, footer").forEach(el =>
+document.querySelectorAll("header, #about, #vlogs, footer").forEach((el) =>
   observer.observe(el)
 );
 
-// ------------------ TRUE 3D PILLAR CAROUSEL ------------------
+// ------------------ True 3D Pillar Carousel ------------------
 if (
   window.gsap &&
   window.ScrollTrigger &&
@@ -86,14 +88,15 @@ if (
   gsap.registerPlugin(ScrollTrigger);
 
   const total = items.length;
-  const radius = Math.min(window.innerWidth, 1200) * 0.32;
+  const radius = Math.min(window.innerWidth, 1200) * 0.36; // slightly bigger radius for spacing
   const angleStep = 360 / total;
 
-  // Position panels around pillar (facing outward)
+  // Position panels around pillar (face outward, smaller size)
   items.forEach((item, i) => {
     gsap.set(item, {
       rotateY: i * angleStep,
       z: radius,
+      scale: 0.8, // smaller
       transformOrigin: `50% 50% -${radius}px`,
       backfaceVisibility: "hidden",
       transformPerspective: 1400,
@@ -102,7 +105,7 @@ if (
     });
   });
 
-  // Rotate the pillar as one object
+  // Rotate the pillar container
   gsap.to(cylinderWrap, {
     rotateY: "+=720",
     ease: "none",
@@ -115,10 +118,9 @@ if (
       anticipatePin: 1
     }
   });
-
 } else {
-  // Reduced-motion fallback
-  items.forEach(item => {
+  // Reduced motion fallback
+  items.forEach((item) => {
     item.style.opacity = 1;
     item.style.transform = "none";
   });
