@@ -39,10 +39,10 @@ vlogs.forEach((v) => {
   card.target = "_blank";
   card.rel = "noopener noreferrer";
   card.className =
-    "vlog-card inline-block bg-white text-gray-900 rounded-xl shadow-md overflow-hidden w-12"; // smaller
+    "vlog-card inline-block bg-white text-gray-900 rounded-xl shadow-md overflow-hidden w-72"; // smaller
 
   card.innerHTML = `
-    <img src="${v.thumb}" alt="${v.title}" loading="lazy" class="w-full h-6 object-cover">
+    <img src="${v.thumb}" alt="${v.title}" loading="lazy" class="w-full h-44 object-cover">
     <div class="p-4">
       <h3 class="font-semibold text-lg text-red-800">${v.title}</h3>
       <p class="scrolling-text text-gray-600 text-sm mt-1">${v.desc}</p>
