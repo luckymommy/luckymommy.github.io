@@ -39,7 +39,7 @@ vlogs.forEach((v) => {
   card.target = "_blank";
   card.rel = "noopener noreferrer";
   card.className =
-    "vlog-card inline-block bg-white text-gray-900 rounded-xl shadow-md overflow-hidden w-72"; // smaller
+    "vlog-card inline-block bg-white text-gray-900 rounded-xl shadow-md overflow-hidden w-72";
 
   card.innerHTML = `
     <img src="${v.thumb}" alt="${v.title}" loading="lazy" class="w-full h-44 object-cover">
@@ -88,27 +88,33 @@ if (
   gsap.registerPlugin(ScrollTrigger);
 
   const total = items.length;
-  const radius = Math.min(window.innerWidth, 1200) * 0.36; // slightly bigger radius for spacing
-  const angleStep = 360 / total;
+  const radius = Math.min(window.innerWidth, 1200) * 0.35; // distance from pillar
+  const rotationSpeed = 360; // degrees to rotate with scroll
 
-  // Position panels around pillar (face outward, smaller size)
+  // Position panels around pillar (face outward)
   items.forEach((item, i) => {
+    const theta = (i / total) * Math.PI * 2; // angle in radians
+    const x = Math.sin(theta) * radius;
+    const z = Math.cos(theta) * radius;
+
     gsap.set(item, {
-      rotateY: i * angleStep,
-      z: radius,
-      scale: 0.8, // smaller
-      transformOrigin: `50% 50% -${radius}px`,
-      backfaceVisibility: "hidden",
+      x: x,
+      y: 0,
+      z: z,
+      rotationY: - (theta * 180 / Math.PI), // face outward
+      scale: 0.6, // smaller thumbnails
+      width: 180,  // thumbnail width
+      height: 110, // thumbnail height
       transformPerspective: 1400,
       force3D: true,
       autoAlpha: 1
     });
   });
 
-  // Rotate the pillar container
+  // Animate cylinder wrapper on scroll
   gsap.to(cylinderWrap, {
-    rotateY: "+=720",
-    ease: "none",
+    rotationY: `+=${rotationSpeed}`,
+    ease: "linear",
     scrollTrigger: {
       trigger: "#showcase",
       start: "top top",
