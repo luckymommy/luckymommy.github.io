@@ -20,7 +20,7 @@ yearSpan.textContent = new Date().getFullYear();
 
 const items = [];
 
-// ------------------ Build Cylinder Items ------------------
+// ------------------ Build Carousel Thumbnails ------------------
 vlogs.forEach((v) => {
   const el = document.createElement("a");
   el.href = v.link;
@@ -38,8 +38,7 @@ vlogs.forEach((v) => {
   card.href = v.link;
   card.target = "_blank";
   card.rel = "noopener noreferrer";
-  card.className =
-    "vlog-card inline-block bg-white text-gray-900 rounded-xl shadow-md overflow-hidden w-72";
+  card.className = "vlog-card inline-block bg-white text-gray-900 rounded-xl shadow-md overflow-hidden w-72";
 
   card.innerHTML = `
     <img src="${v.thumb}" alt="${v.title}" loading="lazy" class="w-full h-44 object-cover">
@@ -51,7 +50,7 @@ vlogs.forEach((v) => {
   vlogContainer.appendChild(card);
 });
 
-// ------------------ Intersection Animations ------------------
+// ------------------ Scroll Animations ------------------
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (!entry.isIntersecting) return;
@@ -79,42 +78,37 @@ document.querySelectorAll("header, #about, #vlogs, footer").forEach((el) =>
   observer.observe(el)
 );
 
-// ------------------ True 3D Pillar Carousel ------------------
-if (
-  window.gsap &&
-  window.ScrollTrigger &&
-  !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-) {
+// ------------------ 3D Carousel (Thumbnails Orbit Pillar) ------------------
+if (window.gsap && window.ScrollTrigger && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   gsap.registerPlugin(ScrollTrigger);
 
   const total = items.length;
-  const radius = Math.min(window.innerWidth, 1200) * 0.35; // distance from pillar
-  const rotationSpeed = 360; // degrees to rotate with scroll
+  const radius = Math.min(window.innerWidth, 1200) * 0.25; // distance from pillar
+  const panelWidth = 200; // smaller thumbnails
+  const panelHeight = 120;
+  const angleStep = 360 / total;
 
-  // Position panels around pillar (face outward)
+  // Initial positioning of panels around pillar
   items.forEach((item, i) => {
-    const theta = (i / total) * Math.PI * 2; // angle in radians
-    const x = Math.sin(theta) * radius;
-    const z = Math.cos(theta) * radius;
-
     gsap.set(item, {
-      x: x,
-      y: 0,
-      z: z,
-      rotationY: - (theta * 180 / Math.PI), // face outward
-      scale: 0.6, // smaller thumbnails
-      width: 180,  // thumbnail width
-      height: 110, // thumbnail height
+      width: panelWidth,
+      height: panelHeight,
+      xPercent: -50,
+      yPercent: -50,
+      transformOrigin: `50% 50% -${radius}px`,
+      rotateY: i * angleStep,
+      scale: 0.9,
+      backfaceVisibility: "hidden",
       transformPerspective: 1400,
       force3D: true,
       autoAlpha: 1
     });
   });
 
-  // Animate cylinder wrapper on scroll
+  // Rotate carousel container on scroll
   gsap.to(cylinderWrap, {
-    rotationY: `+=${rotationSpeed}`,
-    ease: "linear",
+    rotateY: "+=720",
+    ease: "none",
     scrollTrigger: {
       trigger: "#showcase",
       start: "top top",
