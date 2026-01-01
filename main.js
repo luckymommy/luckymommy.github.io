@@ -88,7 +88,7 @@ if (
   gsap.registerPlugin(ScrollTrigger);
 
   const total = items.length;
-  const radius = Math.min(window.innerWidth, 1200) * 0.36; // slightly bigger radius for spacing
+  const radius = Math.min(window.innerWidth, 1200) * 0.64; // slightly bigger radius for spacing
   const angleStep = 360 / total;
 
   // Position panels around pillar (face outward, smaller size)
